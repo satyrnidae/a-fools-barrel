@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "id": "foolsbarrel",
+  "version": "${version}",
+  "name": "A Fool's Barrel",
+  "description": "Adds the April Fools 2022 barrel rendering to the client-side.",
+  "authors": [
+    "saturniidae"
+  ],
+  "contact": {
+    "website": "satyrn.dev"
+  },
+  "license": "MIT",
+  "icon": "assets/foolsbarrel/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "client": [
+      "dev.satyrn.foolsbarrel.client.FoolsBarrelClient"
+    ],
+    "main": [
+      "dev.satyrn.foolsbarrel.FoolsBarrel"
+    ]
+  },
+  "mixins": [
+    "foolsbarrel.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.15.11",
+    "minecraft": "~1.21",
+    "java": ">=21"
+  },
+  "conflicts": {
+    "firstperson": "*",
+    "armored-elytra": "*",
+    "cpm ": "*"
+  }
+}

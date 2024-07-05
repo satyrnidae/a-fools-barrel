@@ -1,0 +1,8 @@
+{
+  "block.barrel.equip": {
+    "sounds": [
+      "minecraft:block/barrel/close"
+    ],
+    "subtitle": "subtitles.block.barrel.close"
+  }
+}
