@@ -1,4 +1,4 @@
-package foolsbarrel.mixin.client;
+package dev.satyrn.foolsbarrel.mixin.client;
 
 import dev.satyrn.foolsbarrel.client.BarrelFeatureRenderer;
 import net.fabricmc.api.EnvType;

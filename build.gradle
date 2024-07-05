@@ -22,7 +22,7 @@ loom {
 	// Loom and Loader both use this block in order to gather more information about your mod.
 	mods {
 		// This should match your mod id.
-		"example_mod" {
+		"foolsbarrel" {
 			// Tell Loom about each source set used by your mod here. This ensures that your mod's classes are properly transformed by Loader.
 			sourceSet("main")
 			// If you shade (directly include classes, not JiJ) a dependency into your mod, include it here using one of these methods:
@@ -48,14 +48,17 @@ dependencies {
 
 	// QSL is not a complete API; You will need Quilted Fabric API to fill in the gaps.
 	// Quilted Fabric API will automatically pull in the correct QSL version.
-	modImplementation libs.quilted.fabric.api
-	// modImplementation libs.bundles.quilted.fabric.api // If you wish to use Fabric API's deprecated modules, you can replace the above line with this one
+	// modImplementation libs.quilted.fabric.api
+	// If you wish to use Fabric API's deprecated modules, you can replace the above line with this one
+	// modImplementation libs.bundles.quilted.fabric.api
+	// Fabric API because Quilt Maven is broken
+	modImplementation libs.fabric.api
 }
 
 processResources {
 	inputs.properties 'version': version, 'group': project.group
 
-	filesMatching('quilt.mod.json') {
+	filesMatching(['quilt.mod.json', 'fabric.mod.json']) {
 		expand 'version': version, 'group': project.group
 	}
 }

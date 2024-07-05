@@ -1,4 +1,4 @@
-package foolsbarrel.mixin;
+package dev.satyrn.foolsbarrel.mixin;
 
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;

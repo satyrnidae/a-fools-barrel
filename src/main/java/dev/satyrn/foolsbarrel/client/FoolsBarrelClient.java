@@ -1,4 +1,4 @@
-package foolsbarrel.client;
+package dev.satyrn.foolsbarrel.client;
 
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;

@@ -1,4 +1,4 @@
-package foolsbarrel.mixin.client;
+package dev.satyrn.foolsbarrel.mixin.client;
 
 import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.render.entity.model.PlayerEntityModel;

@@ -1,4 +1,4 @@
-package foolsbarrel.mixin;
+package dev.satyrn.foolsbarrel.mixin;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityPose;

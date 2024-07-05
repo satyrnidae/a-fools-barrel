@@ -1,4 +1,4 @@
-package foolsbarrel.mixin;
+package dev.satyrn.foolsbarrel.mixin;
 
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.mob.EndermanEntity;
