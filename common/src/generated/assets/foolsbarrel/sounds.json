@@ -1,0 +1,9 @@
+{
+  "block.barrel.equip": {
+    "sounds": [
+      "block/barrel/open1",
+      "block/barrel/open2"
+    ],
+    "subtitle": "block.barrel.equip"
+  }
+}
