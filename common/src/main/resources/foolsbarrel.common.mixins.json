@@ -1,0 +1,44 @@
+{
+  "required": true,
+  "package": "dev.satyrn.foolsbarrel.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "minVersion": "0.8",
+  "client": [
+    "client.CameraMixin",
+    "client.accessors.renderer.entity.LivingEntityRendererAccessor",
+    "client.gui.GuiMixin",
+    "client.model.HumanoidModelMixin",
+    "client.model.IllagerModelMixin",
+    "client.model.PlayerModelMixin",
+    "client.model.VillagerModelMixin",
+    "client.player.LocalPlayerMixin",
+    "client.renderer.entity.HumanoidMobRendererMixin",
+    "client.renderer.entity.IllagerRendererMixin",
+    "client.renderer.entity.LivingEntityRendererMixin",
+    "client.renderer.entity.PlayerRendererMixin",
+    "client.renderer.entity.VillagerRendererMixin",
+    "client.renderer.entity.WitchRendererMixin",
+    "client.renderer.entity.layers.CapeLayerMixin",
+    "client.renderer.entity.layers.CustomHeadLayerMixin",
+    "client.renderer.entity.layers.ElytraLayerMixin",
+    "client.renderer.entity.layers.HumanoidArmorLayerMixin",
+    "client.renderer.entity.layers.ItemInHandLayerMixin"
+  ],
+  "mixins": [
+    "world.entity.LivingEntityMixin",
+    "world.entity.ai.goal.AvoidEntityGoalMixin",
+    "world.entity.ai.goal.LeapAtTargetGoalMixin",
+    "world.entity.ai.goal.LookAtPlayerGoalMixin",
+    "world.entity.ai.goal.MeleeAttackGoalMixin",
+    "world.entity.ai.goal.RangedAttackGoalMixin",
+    "world.entity.ai.goal.RangedCrossbowAttackGoalMixin",
+    "world.entity.ai.goal.SwellGoalMixin",
+    "world.entity.player.PlayerMixin",
+    "world.item.BlockItemMixin",
+    "world.item.ItemMixin",
+    "world.level.block.BarrelBlockMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

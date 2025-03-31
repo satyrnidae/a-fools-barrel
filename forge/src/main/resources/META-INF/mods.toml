@@ -1,0 +1,35 @@
+modLoader = "javafml"
+loaderVersion = "[43,)"
+issueTrackerURL = "https://github.com/satyrnidae/a-fools-barrel/issues"
+license = "CC0-1.0"
+
+[[mods]]
+modId = "foolsbarrel"
+version = "${version}"
+displayName = "A Fool's Barrel"
+authors = "Isabel Maskrey"
+description = '''
+Reimplements the April Fools 2022 One Block at a Time barrel functionality.
+'''
+logoFile = "icon.png"
+
+[[dependencies.foolsbarrel]]
+modId = "forge"
+mandatory = true
+versionRange = "[43,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.foolsbarrel]]
+modId = "minecraft"
+mandatory = true
+versionRange = "[1.19.2]"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.foolsbarrel]]
+modId = "architectury"
+mandatory = true
+versionRange = "[6.6.92,)"
+ordering = "AFTER"
+side = "BOTH"

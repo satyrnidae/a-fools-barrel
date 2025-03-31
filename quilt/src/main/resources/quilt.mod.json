@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "quilt_loader": {
+    "group": "${group}",
+    "id": "foolsbarrel",
+    "version": "${version}",
+    "metadata": {
+      "name": "A Fool's Barrel",
+      "description": "Reimplements the April Fools 2022 One Block at a Time barrel functionality.",
+      "contributors": {
+        "Isabel Maskrey": "Author"
+      },
+      "icon": "assets/foolsbarrel/icon.png",
+			"license": "CC0-1.0",
+			"contact": {
+				"email": "isabel@satyrn.dev",
+				"homepage": "https://github.com/satyrnidae/a-fools-barrel/releases",
+				"issues": "https://github.com/satyrnidae/a-fools-barrel/issues",
+				"sources": "https://github.com/satyrnidae/a-fools-barrel"
+			}
+    },
+    "intermediate_mappings": "net.fabricmc:intermediary",
+    "entrypoints": {
+      "init": [
+        "dev.satyrn.foolsbarrel.quilt.FoolsBarrelQuilt"
+      ],
+			"client_init": [
+				"dev.satyrn.foolsbarrel.quilt.client.FoolsBarrelQuiltClient"
+			]
+    },
+    "depends": [
+      {
+        "id": "quilt_loader",
+        "version": "*"
+      },
+      {
+        "id": "quilt_base",
+        "version": "*"
+      },
+      {
+        "id": "minecraft",
+        "version": "1.19.2"
+      },
+      {
+        "id": "architectury",
+        "version": ">=6.6.92"
+      },
+			{
+				"id": "modmenu",
+				"version": ">=4.0.6",
+				"optional": true
+			}
+    ]
+  },
+  "mixin": [
+    "foolsbarrel.common.mixins.json",
+		"foolsbarrel.quilt.mixins.json"
+  ],
+	"modmenu": {
+		"update_checker": false
+	}
+}

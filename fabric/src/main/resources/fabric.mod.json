@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "id": "foolsbarrel",
+  "version": "${version}",
+  "name": "A Fool's Barrel",
+  "description": "Reimplements the April Fools 2022 One Block at a Time barrel functionality.",
+  "authors": [
+    {
+      "name": "Isabel Maskrey",
+      "contact": {
+        "email": "isabel@satyrn.dev",
+        "homepage": "https://satyrn.dev"
+      }
+    }
+  ],
+  "contact": {
+    "email": "isabel@satyrn.dev",
+    "homepage": "https://github.com/satyrnidae/a-fools-barrel/releases",
+    "issues": "https://github.com/satyrnidae/a-fools-barrel/issues",
+    "sources": "https://github.com/satyrnidae/a-fools-barrel"
+  },
+  "license": "CC0-1.0",
+  "icon": "assets/foolsbarrel/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "dev.satyrn.foolsbarrel.fabric.FoolsBarrelFabric"
+    ],
+    "client": [
+      "dev.satyrn.foolsbarrel.fabric.client.FoolsBarrelFabricClient"
+    ]
+  },
+  "mixins": [
+    "foolsbarrel.common.mixins.json",
+    "foolsbarrel.fabric.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.16.10",
+    "minecraft": "1.19.2",
+    "java": ">=17",
+    "architectury": ">=6.6.92",
+    "fabric-api": "*"
+  },
+  "suggests": {
+    "modmenu": ">=4.0.6"
+  },
+  "custom": {
+    "modmenu": {
+      "links": {
+        "modmenu.buymeacoffee": "https://ko-fi.com/satyrnidae",
+        "modmenu.github_releases": "https://github.com/satyrnidae/a-fools-barrel/releases"
+      },
+      "update_checker": false
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "required": true,
+  "package": "dev.satyrn.foolsbarrel.quilt.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "minVersion": "0.8",
+  "client": [
+  ],
+  "mixins": [
+    "world.entity.EnderManMixin",
+    "world.entity.ai.goal.RangedBowAttackGoalMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

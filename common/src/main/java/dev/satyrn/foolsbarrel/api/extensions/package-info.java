@@ -1,0 +1,8 @@
+@FieldsAreNonnullByDefault @MethodsReturnNonnullByDefault @ParametersAreNonnullByDefault @VariablesAreNonnullByDefault
+package dev.satyrn.foolsbarrel.api.extensions;
+
+import dev.satyrn.foolsbarrel.annotations.VariablesAreNonnullByDefault;
+import net.minecraft.FieldsAreNonnullByDefault;
+import net.minecraft.MethodsReturnNonnullByDefault;
+
+import javax.annotation.ParametersAreNonnullByDefault;
