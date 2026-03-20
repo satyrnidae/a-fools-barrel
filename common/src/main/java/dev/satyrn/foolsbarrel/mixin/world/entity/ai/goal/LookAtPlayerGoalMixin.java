@@ -1,12 +1,13 @@
 package dev.satyrn.foolsbarrel.mixin.world.entity.ai.goal;
 
+import dev.satyrn.foolsbarrel.FoolsBarrelCommon;
+import dev.satyrn.foolsbarrel.data.tags.ModItemTags;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -24,26 +25,30 @@ public abstract class LookAtPlayerGoalMixin extends Goal {
 
 	@Inject(method = "canUse()Z", at = @At(value = "RETURN", ordinal = 1), cancellable = true)
 	void foolsBarrel$canUse(final CallbackInfoReturnable<Boolean> cir) {
-		if (this.mob.getItemBySlot(EquipmentSlot.HEAD).is(Items.BARREL)) {
+		if (this.mob.getItemBySlot(EquipmentSlot.HEAD).is(ModItemTags.BARRELS)) {
 			cir.setReturnValue(false);
 			cir.cancel();
-		} else if (this.lookAt instanceof LivingEntity livingEntity) {
-			if (livingEntity.getItemBySlot(EquipmentSlot.HEAD).is(Items.BARREL) && livingEntity.isCrouching()) {
-				cir.setReturnValue(false);
-				cir.cancel();
+		} else if (FoolsBarrelCommon.getCommonConfig().getShouldAnimalsIgnoreHidingPlayers()) {
+			if (this.lookAt instanceof LivingEntity livingEntity) {
+				if (livingEntity.getItemBySlot(EquipmentSlot.HEAD).is(ModItemTags.BARRELS) && livingEntity.isCrouching()) {
+					cir.setReturnValue(false);
+					cir.cancel();
+				}
 			}
 		}
 	}
 
 	@Inject(method = "canContinueToUse()Z", at = @At(value = "RETURN", ordinal = 2), cancellable = true)
 	void foolsBarrel$canContinueToUse(final CallbackInfoReturnable<Boolean> cir) {
-		if (this.mob.getItemBySlot(EquipmentSlot.HEAD).is(Items.BARREL)) {
+		if (this.mob.getItemBySlot(EquipmentSlot.HEAD).is(ModItemTags.BARRELS)) {
 			cir.setReturnValue(false);
 			cir.cancel();
-		} else if (this.lookAt instanceof LivingEntity livingEntity) {
-			if (livingEntity.getItemBySlot(EquipmentSlot.HEAD).is(Items.BARREL) && livingEntity.isCrouching()) {
-				cir.setReturnValue(false);
-				cir.cancel();
+		} else if (FoolsBarrelCommon.getCommonConfig().getShouldAnimalsIgnoreHidingPlayers()) {
+			if (this.lookAt instanceof LivingEntity livingEntity) {
+				if (livingEntity.getItemBySlot(EquipmentSlot.HEAD).is(ModItemTags.BARRELS) && livingEntity.isCrouching()) {
+					cir.setReturnValue(false);
+					cir.cancel();
+				}
 			}
 		}
 	}

@@ -1,5 +1,6 @@
 package dev.satyrn.foolsbarrel.mixin.client.model;
 
+import dev.satyrn.foolsbarrel.data.tags.ModItemTags;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.model.ArmedModel;
@@ -37,8 +38,8 @@ public abstract class IllagerModelMixin extends HierarchicalModel implements Arm
 									final float netHeadYaw,
 									final float headPitch,
 									final CallbackInfo ci) {
-		boolean wearingBarrel = entity.getItemBySlot(EquipmentSlot.HEAD).is(Items.BARREL);
-		this.head.visible = !wearingBarrel;
+		boolean wearingBarrel = entity.getItemBySlot(EquipmentSlot.HEAD).is(ModItemTags.BARRELS);
+		this.head.visible &= !wearingBarrel;
 
 		if (wearingBarrel) {
 			this.hat.y = 1.5f;
@@ -55,7 +56,7 @@ public abstract class IllagerModelMixin extends HierarchicalModel implements Arm
 									final float netHeadYaw,
 									final float headPitch,
 									final CallbackInfo ci) {
-		boolean wearingBarrel = entity.getItemBySlot(EquipmentSlot.HEAD).is(Items.BARREL);
+		boolean wearingBarrel = entity.getItemBySlot(EquipmentSlot.HEAD).is(ModItemTags.BARRELS);
 		if (wearingBarrel) {
 			this.head.xRot = 0.0f;
 			this.head.yRot = 0.0f;

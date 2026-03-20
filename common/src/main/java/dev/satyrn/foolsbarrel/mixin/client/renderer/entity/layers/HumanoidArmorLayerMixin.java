@@ -1,6 +1,7 @@
 package dev.satyrn.foolsbarrel.mixin.client.renderer.entity.layers;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import dev.satyrn.foolsbarrel.data.tags.ModItemTags;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -38,7 +39,7 @@ public abstract class HumanoidArmorLayerMixin extends RenderLayer {
 							final float headYaw,
 							final float headPitch,
 							final CallbackInfo ci) {
-		if (livingEntity.isCrouching() && livingEntity.getItemBySlot(EquipmentSlot.HEAD).is(Items.BARREL)) {
+		if (livingEntity.isCrouching() && livingEntity.getItemBySlot(EquipmentSlot.HEAD).is(ModItemTags.BARRELS)) {
 			ci.cancel();
 		}
 	}

@@ -26,6 +26,9 @@
       ],
 			"client_init": [
 				"dev.satyrn.foolsbarrel.quilt.client.FoolsBarrelQuiltClient"
+			],
+			"modmenu": [
+				"dev.satyrn.foolsbarrel.fabriclike.client.ModMenuEntrypoint"
 			]
     },
     "depends": [
@@ -46,9 +49,21 @@
         "version": ">=6.6.92"
       },
 			{
+				"id": "lepidoptera-api",
+				"version": ">=1902.3.1"
+			},
+			{
+				"id": "cloth-config",
+				"version": ">=8.3.134"
+			},
+			{
 				"id": "modmenu",
-				"version": ">=4.0.6",
-				"optional": true
+				"optional": true,
+				"version": ">=4.1.2"
+			},
+			{
+				"id": "badpackets",
+				"version": ">=0.2.0"
 			}
     ]
   },
@@ -57,6 +72,11 @@
 		"foolsbarrel.quilt.mixins.json"
   ],
 	"modmenu": {
-		"update_checker": false
+		"links": {
+			"modmenu.buymeacoffee": "https://ko-fi.com/satyrnidae",
+			"modmenu.github_releases": "https://github.com/satyrnidae/a-fools-barrel/releases"
+		},
+		"update_checker": false,
+		"parent": "lepidoptera-api"
 	}
 }

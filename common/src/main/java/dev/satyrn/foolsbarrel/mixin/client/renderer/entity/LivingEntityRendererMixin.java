@@ -1,6 +1,7 @@
 package dev.satyrn.foolsbarrel.mixin.client.renderer.entity;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import dev.satyrn.foolsbarrel.data.tags.ModItemTags;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.renderer.entity.EntityRenderer;
@@ -33,7 +34,7 @@ public abstract class LivingEntityRendererMixin extends EntityRenderer implement
 									final float rotationYaw,
 									final float partialTicks,
 									final CallbackInfo ci) {
-		if (entityLiving.getItemBySlot(EquipmentSlot.HEAD).is(Items.BARREL) && entityLiving.isCrouching()) {
+		if (entityLiving.getItemBySlot(EquipmentSlot.HEAD).is(ModItemTags.BARRELS) && entityLiving.isCrouching()) {
 			ci.cancel();
 		}
 	}

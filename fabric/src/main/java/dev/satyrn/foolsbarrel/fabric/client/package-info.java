@@ -1,5 +1,8 @@
-@FieldsAreNonnullByDefault @MethodsReturnNonnullByDefault
+@FieldsAreNonnullByDefault @MethodsReturnNonnullByDefault @ParametersAreNonnullByDefault @VariablesAreNonnullByDefault
 package dev.satyrn.foolsbarrel.fabric.client;
 
+import dev.satyrn.lepidoptera.annotations.VariablesAreNonnullByDefault;
 import net.minecraft.FieldsAreNonnullByDefault;
 import net.minecraft.MethodsReturnNonnullByDefault;
+
+import javax.annotation.ParametersAreNonnullByDefault;

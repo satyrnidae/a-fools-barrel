@@ -1,5 +1,7 @@
 package dev.satyrn.foolsbarrel.mixin.client;
 
+import dev.satyrn.foolsbarrel.FoolsBarrelCommon;
+import dev.satyrn.foolsbarrel.data.tags.ModItemTags;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.Camera;
@@ -30,8 +32,9 @@ public abstract class CameraMixin {
 
 	@Inject(method = "tick()V", cancellable = true, at = @At("HEAD"))
 	public void foolsbarrel$tick(final CallbackInfo ci) {
-		if (this.entity instanceof final LivingEntity livingEntity &&
-			livingEntity.getItemBySlot(EquipmentSlot.HEAD).is(Items.BARREL)) {
+		if (FoolsBarrelCommon.getClientConfig().getAdjustCameraInBarrel() &&
+			this.entity instanceof final LivingEntity livingEntity &&
+			livingEntity.getItemBySlot(EquipmentSlot.HEAD).is(ModItemTags.BARRELS)) {
 			this.eyeHeightOld = this.eyeHeight;
 			float offset = !this.detached && this.entity.isCrouching() ? 0.875f : this.entity.getEyeHeight();
 			this.eyeHeight += (offset - this.eyeHeight) * 0.5f;

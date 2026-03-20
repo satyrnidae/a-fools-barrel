@@ -1,8 +1,9 @@
 package dev.satyrn.foolsbarrel.forge.data;
 
 import dev.satyrn.foolsbarrel.FoolsBarrelCommon;
-import dev.satyrn.foolsbarrel.forge.data.client.FBEnUSLanguageProvider;
-import dev.satyrn.foolsbarrel.forge.data.client.FBSoundDefinitionsProvider;
+import dev.satyrn.foolsbarrel.forge.data.client.ModUSEnglishLanguageProvider;
+import dev.satyrn.foolsbarrel.forge.data.client.ModSoundDefinitionsProvider;
+import dev.satyrn.foolsbarrel.forge.data.server.ModItemTagsProvider;
 import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -11,13 +12,15 @@ import net.minecraftforge.fml.common.Mod;
 public class FoolsBarrelGatherDataEvents {
 	@SubscribeEvent
 	static void onGatherData(final GatherDataEvent event) {
-		event.getGenerator().addProvider(
-			event.includeClient(),
-			new FBSoundDefinitionsProvider(event.getGenerator(), event.getModContainer().getModId(), event.getExistingFileHelper())
-		);
-		event.getGenerator().addProvider(
-			event.includeClient(),
-			new FBEnUSLanguageProvider(event.getGenerator(), event.getModContainer().getModId(), "en_us")
-		);
+		final var generator = event.getGenerator();
+		final var existingFileHelper = event.getExistingFileHelper();
+
+		if (event.includeClient()) {
+			generator.addProvider(true, new ModSoundDefinitionsProvider(generator, existingFileHelper));
+			generator.addProvider(true, new ModUSEnglishLanguageProvider(generator));
+		}
+		if (event.includeServer()) {
+			generator.addProvider(true, new ModItemTagsProvider(generator, existingFileHelper));
+		}
 	}
 }

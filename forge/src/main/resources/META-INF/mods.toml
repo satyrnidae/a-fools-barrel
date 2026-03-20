@@ -33,3 +33,24 @@ mandatory = true
 versionRange = "[6.6.92,)"
 ordering = "AFTER"
 side = "BOTH"
+
+[[dependencies.foolsbarrel]]
+modId = "cloth_config"
+mandatory = true
+versionRange = "[8.3.134,)"
+ordering = "AFTER"
+side = "BOTH"
+
+[[dependencies.foolsbarrel]]
+modId = "lepidoptera_api"
+mandatory = true
+versionRange = "[1902.3.1,)"
+ordering = "AFTER"
+side = "BOTH"
+
+[[dependencies.foolsbarrel]]
+modId = "badpackets"
+mandatory = true
+versionRange = "[0.2.0,)"
+ordering = "AFTER"
+side = "BOTH"

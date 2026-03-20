@@ -1,5 +1,7 @@
 package dev.satyrn.foolsbarrel.mixin.world.entity.ai.goal;
 
+import dev.satyrn.foolsbarrel.FoolsBarrelCommon;
+import dev.satyrn.foolsbarrel.data.tags.ModItemTags;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.goal.Goal;
@@ -24,21 +26,31 @@ public abstract class SwellGoalMixin extends Goal {
 
 	@Inject(method = "canUse()Z", at = @At(value = "INVOKE_ASSIGN", target = "net/minecraft/world/entity/monster/Creeper.getTarget ()Lnet/minecraft/world/entity/LivingEntity;", ordinal = 0), locals = LocalCapture.CAPTURE_FAILSOFT, cancellable = true)
 	void foolsBarrel$canUse(final CallbackInfoReturnable<Boolean> cir, final @Nullable LivingEntity livingEntity) {
-		if (livingEntity != null &&
-			livingEntity.isCrouching() &&
-			livingEntity.getItemBySlot(EquipmentSlot.HEAD).is(Items.BARREL)) {
+		if (this.creeper.getItemBySlot(EquipmentSlot.HEAD).is(ModItemTags.BARRELS)) {
 			cir.setReturnValue(false);
 			cir.cancel();
+		} if (FoolsBarrelCommon.getCommonConfig().getShouldHidingRemoveMobAggro()) {
+			if (livingEntity != null &&
+				livingEntity.isCrouching() &&
+				livingEntity.getItemBySlot(EquipmentSlot.HEAD).is(ModItemTags.BARRELS)) {
+				cir.setReturnValue(false);
+				cir.cancel();
+			}
 		}
 	}
 
 	@Inject(method = "tick()V", at = @At("HEAD"), cancellable = true)
 	void foolsBarrel$tick(final CallbackInfo ci) {
-		if (this.target != null &&
-			this.target.isCrouching() &&
-			this.target.getItemBySlot(EquipmentSlot.HEAD).is(Items.BARREL)) {
+		if (this.creeper.getItemBySlot(EquipmentSlot.HEAD).is(ModItemTags.BARRELS)) {
 			this.creeper.setSwellDir(-1);
 			ci.cancel();
+		} else if (FoolsBarrelCommon.getCommonConfig().getShouldHidingRemoveMobAggro()) {
+			if (this.target != null &&
+				this.target.isCrouching() &&
+				this.target.getItemBySlot(EquipmentSlot.HEAD).is(ModItemTags.BARRELS)) {
+				this.creeper.setSwellDir(-1);
+				ci.cancel();
+			}
 		}
 	}
 }

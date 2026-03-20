@@ -1,5 +1,6 @@
 package dev.satyrn.foolsbarrel.forge.data.client;
 
+import dev.satyrn.foolsbarrel.FoolsBarrelCommon;
 import dev.satyrn.foolsbarrel.sounds.FoolsBarrelSoundEvents;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
@@ -7,9 +8,9 @@ import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.common.data.SoundDefinition;
 import net.minecraftforge.common.data.SoundDefinitionsProvider;
 
-public class FBSoundDefinitionsProvider extends SoundDefinitionsProvider {
-	public FBSoundDefinitionsProvider(DataGenerator generator, String modId, ExistingFileHelper helper) {
-		super(generator, modId, helper);
+public class ModSoundDefinitionsProvider extends SoundDefinitionsProvider {
+	public ModSoundDefinitionsProvider(DataGenerator generator, ExistingFileHelper helper) {
+		super(generator, FoolsBarrelCommon.MOD_ID, helper);
 	}
 
 	@Override

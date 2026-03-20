@@ -12,7 +12,7 @@ loom {
 		data {
 			data()
 			programArgs "--all", "--mod", project.rootProject.name
-			programArgs "--output", file("../common/src/generated").absolutePath
+			programArgs "--output", file("../common/src/generated/resources").absolutePath
 			programArgs "--validate"
 			programArgs "--existing", file("../common/src/main/resources").absolutePath
 		}
@@ -53,6 +53,15 @@ dependencies {
 
     common(project(path: ':common', configuration: 'namedElements')) { transitive false }
     shadowBundle project(path: ':common', configuration: 'transformProductionForge')
+
+	modImplementation("me.shedaniel.cloth:cloth-config-forge:${rootProject.cloth_config_version}") {
+		exclude(group: "dev.architectury")
+	}
+
+	modImplementation("dev.satyrn.lepidoptera:lepidopterapi-forge:${rootProject.lepidoptera_version}") {
+		exclude(group: "dev.architectury")
+	}
+	modRuntimeOnly "lol.bai:badpackets:forge-${rootProject.badpackets_version}"
 }
 
 processResources {
@@ -64,7 +73,7 @@ processResources {
 }
 
 shadowJar {
-    configurations = [project.configurations.shadowBundle]
+	configurations = [project.configurations.shadowBundle]
     archiveClassifier = 'dev-shadow'
 }
 

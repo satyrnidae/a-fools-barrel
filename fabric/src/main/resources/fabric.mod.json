@@ -28,6 +28,9 @@
     ],
     "client": [
       "dev.satyrn.foolsbarrel.fabric.client.FoolsBarrelFabricClient"
+    ],
+    "modmenu": [
+      "dev.satyrn.foolsbarrel.fabriclike.client.ModMenuEntrypoint"
     ]
   },
   "mixins": [
@@ -39,10 +42,13 @@
     "minecraft": "1.19.2",
     "java": ">=17",
     "architectury": ">=6.6.92",
-    "fabric-api": "*"
+    "fabric-api": "*",
+    "lepidoptera-api": ">=1902.3.1",
+    "cloth-config": ">=8.3.134",
+    "badpackets": ">=0.2.0"
   },
   "suggests": {
-    "modmenu": ">=4.0.6"
+    "modmenu": ">=4.1.2"
   },
   "custom": {
     "modmenu": {
@@ -50,7 +56,8 @@
         "modmenu.buymeacoffee": "https://ko-fi.com/satyrnidae",
         "modmenu.github_releases": "https://github.com/satyrnidae/a-fools-barrel/releases"
       },
-      "update_checker": false
+      "update_checker": false,
+      "parent": "lepidoptera-api"
     }
   }
 }

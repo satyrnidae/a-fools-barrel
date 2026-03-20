@@ -14,7 +14,7 @@ public final class FoolsBarrelSoundEvents {
 		Registry.SOUND_EVENT_REGISTRY);
 
 	static {
-		final ResourceLocation barrelEquipId = new ResourceLocation(FoolsBarrelCommon.MOD_ID, "block.barrel.equip");
+		final ResourceLocation barrelEquipId = FoolsBarrelCommon.createId("block.barrel.equip");
 		BARREL_EQUIP_SOUND = SOUND_EVENTS.register(barrelEquipId, () -> new SoundEvent(barrelEquipId));
 	}
 

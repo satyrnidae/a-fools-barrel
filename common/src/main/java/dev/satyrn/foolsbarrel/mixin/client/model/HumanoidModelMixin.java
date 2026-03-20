@@ -1,5 +1,6 @@
 package dev.satyrn.foolsbarrel.mixin.client.model;
 
+import dev.satyrn.foolsbarrel.data.tags.ModItemTags;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.model.AgeableListModel;
@@ -12,7 +13,6 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.decoration.ArmorStand;
 import net.minecraft.world.entity.monster.EnderMan;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Items;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -43,10 +43,16 @@ public abstract class HumanoidModelMixin extends AgeableListModel implements Arm
 							   final float headPitch,
 							   final CallbackInfo ci) {
 		if (!(entity instanceof EnderMan) && !(entity instanceof ArmorStand)) {
-			boolean isBarrelEquipped = entity.getItemBySlot(EquipmentSlot.HEAD).is(Items.BARREL);
-			this.leftArm.visible = this.rightArm.visible = this.head.visible = this.hat.visible = !isBarrelEquipped;
+			boolean isBarrelEquipped = entity.getItemBySlot(EquipmentSlot.HEAD).is(ModItemTags.BARRELS);
+			this.leftArm.visible &= !isBarrelEquipped;
+			this.rightArm.visible &= !isBarrelEquipped;
+			this.head.visible &= !isBarrelEquipped;
+		    this.hat.visible &= !isBarrelEquipped;
+
 			if (entity instanceof final Player player && player.isCrouching()) {
-				this.body.visible = this.rightLeg.visible = this.leftLeg.visible = !isBarrelEquipped;
+				this.body.visible &= !isBarrelEquipped;
+				this.rightLeg.visible &= !isBarrelEquipped;
+				this.leftLeg.visible &= !isBarrelEquipped;
 			}
 		}
 	}

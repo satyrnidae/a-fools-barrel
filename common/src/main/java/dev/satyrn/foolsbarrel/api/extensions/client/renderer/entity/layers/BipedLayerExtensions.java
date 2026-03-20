@@ -5,7 +5,5 @@ import net.fabricmc.api.Environment;
 
 @Environment(EnvType.CLIENT)
 public interface BipedLayerExtensions {
-    boolean foolsBarrel$getIsBiped();
-
-    void foolsBarrel$setIsBiped(boolean value);
+    void setBiped(boolean value);
 }

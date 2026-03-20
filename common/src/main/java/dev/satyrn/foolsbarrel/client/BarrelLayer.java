@@ -1,6 +1,7 @@
 package dev.satyrn.foolsbarrel.client;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import dev.satyrn.foolsbarrel.data.tags.ModItemTags;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.Minecraft;
@@ -13,6 +14,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
@@ -59,8 +61,14 @@ public class BarrelLayer<T extends LivingEntity, M extends EntityModel<T>> exten
 					   final float headYaw,
 					   final float headPitch) {
         ItemStack itemStack = entity.getItemBySlot(EquipmentSlot.HEAD);
-        if (!itemStack.isEmpty() && itemStack.is(Items.BARREL)) {
-            BlockState blockState = Blocks.BARREL.defaultBlockState();
+        if (!itemStack.isEmpty() && itemStack.is(ModItemTags.BARRELS)) {
+			BlockState blockState;
+
+			if (itemStack.getItem() instanceof BlockItem blockItem) {
+				blockState = blockItem.getBlock().defaultBlockState();
+			} else {
+				blockState = Blocks.BARREL.defaultBlockState();
+			}
             if (blockState.hasProperty(BlockStateProperties.OPEN)) {
                 boolean playerSneaking = false;
                 if (entity instanceof final Player player) {

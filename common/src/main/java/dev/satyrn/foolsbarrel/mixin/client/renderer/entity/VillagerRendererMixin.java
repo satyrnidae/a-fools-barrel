@@ -2,7 +2,7 @@ package dev.satyrn.foolsbarrel.mixin.client.renderer.entity;
 
 import dev.satyrn.foolsbarrel.client.BarrelLayer;
 import dev.satyrn.foolsbarrel.api.extensions.client.renderer.entity.layers.BipedLayerExtensions;
-import dev.satyrn.foolsbarrel.mixin.client.accessors.renderer.entity.LivingEntityRendererAccessor;
+import dev.satyrn.lepidoptera.mixin.accessors.net.minecraft.client.renderer.entity.LivingEntityRendererAccessor;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.model.EntityModel;
@@ -42,7 +42,7 @@ public abstract class VillagerRendererMixin extends MobRenderer {
 			.filter(item -> item instanceof CustomHeadLayer)
 			.findFirst();
 		headFeatureRenderer.ifPresent(
-			featureRenderer -> ((BipedLayerExtensions) featureRenderer).foolsBarrel$setIsBiped(true));
+			featureRenderer -> ((BipedLayerExtensions) featureRenderer).setBiped(true));
 	}
 
 }

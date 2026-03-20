@@ -1,5 +1,7 @@
 package dev.satyrn.foolsbarrel.quilt.mixin.world.entity.ai.goal;
 
+import dev.satyrn.foolsbarrel.FoolsBarrelCommon;
+import dev.satyrn.foolsbarrel.data.tags.ModItemTags;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
@@ -34,12 +36,12 @@ public abstract class RangedBowAttackGoalMixin extends Goal {
 		if (this.foolsBarrel$mob == null) {
 			throw new AssertionError();
 		}
-		if (this.foolsBarrel$mob.getItemBySlot(EquipmentSlot.HEAD).is(Items.BARREL)) {
+		if (this.foolsBarrel$mob.getItemBySlot(EquipmentSlot.HEAD).is(ModItemTags.BARRELS)) {
 			cir.setReturnValue(false);
 			cir.cancel();
-		} else {
+		} else if (FoolsBarrelCommon.getCommonConfig().getShouldHidingRemoveMobAggro()) {
 			final @Nullable LivingEntity target = this.foolsBarrel$mob.getTarget();
-			if (target != null && target.getItemBySlot(EquipmentSlot.HEAD).is(Items.BARREL) && target.isCrouching()) {
+			if (target != null && target.getItemBySlot(EquipmentSlot.HEAD).is(ModItemTags.BARRELS) && target.isCrouching()) {
 				cir.setReturnValue(false);
 				cir.cancel();
 			}
@@ -51,12 +53,12 @@ public abstract class RangedBowAttackGoalMixin extends Goal {
 		if (this.foolsBarrel$mob == null) {
 			throw new AssertionError();
 		}
-		if (this.foolsBarrel$mob.getItemBySlot(EquipmentSlot.HEAD).is(Items.BARREL)) {
+		if (this.foolsBarrel$mob.getItemBySlot(EquipmentSlot.HEAD).is(ModItemTags.BARRELS)) {
 			cir.setReturnValue(false);
 			cir.cancel();
-		} else {
+		} else if (FoolsBarrelCommon.getCommonConfig().getShouldHidingRemoveMobAggro()) {
 			final @Nullable LivingEntity target = this.foolsBarrel$mob.getTarget();
-			if (target != null && target.getItemBySlot(EquipmentSlot.HEAD).is(Items.BARREL) && target.isCrouching()) {
+			if (target != null && target.getItemBySlot(EquipmentSlot.HEAD).is(ModItemTags.BARRELS) && target.isCrouching()) {
 				cir.setReturnValue(false);
 				cir.cancel();
 			}

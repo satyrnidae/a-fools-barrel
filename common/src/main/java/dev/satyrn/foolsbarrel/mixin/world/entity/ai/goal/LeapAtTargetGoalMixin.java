@@ -1,5 +1,7 @@
 package dev.satyrn.foolsbarrel.mixin.world.entity.ai.goal;
 
+import dev.satyrn.foolsbarrel.FoolsBarrelCommon;
+import dev.satyrn.foolsbarrel.data.tags.ModItemTags;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
@@ -24,17 +26,31 @@ public abstract class LeapAtTargetGoalMixin extends Goal {
 
 	@Inject(method = "canUse()Z", at = @At(value = "INVOKE_ASSIGN", target = "net/minecraft/world/entity/Mob.getTarget ()Lnet/minecraft/world/entity/LivingEntity;"), cancellable = true)
 	void foolsBarrel$canUse(final CallbackInfoReturnable<Boolean> cir) {
-		if (this.target != null && this.target.getItemBySlot(EquipmentSlot.HEAD).is(Items.BARREL) && this.target.isCrouching()) {
+		if(this.mob.getItemBySlot(EquipmentSlot.HEAD).is(ModItemTags.BARRELS)) {
 			cir.setReturnValue(false);
 			cir.cancel();
+		} else if (FoolsBarrelCommon.getCommonConfig().getShouldHidingRemoveMobAggro()) {
+			if (this.target != null &&
+				this.target.getItemBySlot(EquipmentSlot.HEAD).is(ModItemTags.BARRELS) &&
+				this.target.isCrouching()) {
+				cir.setReturnValue(false);
+				cir.cancel();
+			}
 		}
 	}
 
 	@Inject(method = "canContinueToUse()Z", at = @At("HEAD"), cancellable = true)
 	void foolsBarrel$canContinueToUse(final CallbackInfoReturnable<Boolean> cir) {
-		if (this.target != null && this.target.getItemBySlot(EquipmentSlot.HEAD).is(Items.BARREL) && this.target.isCrouching()) {
+		if(this.mob.getItemBySlot(EquipmentSlot.HEAD).is(ModItemTags.BARRELS)) {
 			cir.setReturnValue(false);
 			cir.cancel();
+		} else if (FoolsBarrelCommon.getCommonConfig().getShouldHidingRemoveMobAggro()) {
+			if (this.target != null &&
+				this.target.getItemBySlot(EquipmentSlot.HEAD).is(ModItemTags.BARRELS) &&
+				this.target.isCrouching()) {
+				cir.setReturnValue(false);
+				cir.cancel();
+			}
 		}
 	}
 }

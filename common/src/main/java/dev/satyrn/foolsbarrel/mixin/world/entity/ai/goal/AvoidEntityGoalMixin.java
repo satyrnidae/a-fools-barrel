@@ -1,5 +1,6 @@
 package dev.satyrn.foolsbarrel.mixin.world.entity.ai.goal;
 
+import dev.satyrn.foolsbarrel.data.tags.ModItemTags;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.PathfinderMob;
@@ -22,10 +23,10 @@ public abstract class AvoidEntityGoalMixin extends Goal {
 
 	@Inject(method = "canUse()Z", at = @At(value = "INVOKE", target = "net/minecraft/world/entity/ai/util/DefaultRandomPos.getPosAway (Lnet/minecraft/world/entity/PathfinderMob;IILnet/minecraft/world/phys/Vec3;)Lnet/minecraft/world/phys/Vec3;", ordinal = 0), cancellable = true)
 	void foolsBarrel$canUse(final CallbackInfoReturnable<Boolean> cir) {
-		if(this.mob.getItemBySlot(EquipmentSlot.HEAD).is(Items.BARREL)) {
+		if(this.mob.getItemBySlot(EquipmentSlot.HEAD).is(ModItemTags.BARRELS)) {
 			cir.setReturnValue(false);
 			cir.cancel();
-		} else if (this.toAvoid != null && this.toAvoid.getItemBySlot(EquipmentSlot.HEAD).is(Items.BARREL) && this.toAvoid.isCrouching()) {
+		} else if (this.toAvoid != null && this.toAvoid.getItemBySlot(EquipmentSlot.HEAD).is(ModItemTags.BARRELS) && this.toAvoid.isCrouching()) {
 			cir.setReturnValue(false);
 			cir.cancel();
 		}

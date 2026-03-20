@@ -1,5 +1,6 @@
 package dev.satyrn.foolsbarrel.mixin.client.model;
 
+import dev.satyrn.foolsbarrel.data.tags.ModItemTags;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.model.HeadedModel;
@@ -43,9 +44,9 @@ public abstract class VillagerModelMixin extends HierarchicalModel implements He
 		this.hat.y = entity instanceof Witch ? -10.03125f : this.head.y;
 		boolean wearingBarrel;
 		if (entity instanceof final AbstractVillager merchant) {
-			wearingBarrel = merchant.getItemBySlot(EquipmentSlot.HEAD).is(Items.BARREL);
+			wearingBarrel = merchant.getItemBySlot(EquipmentSlot.HEAD).is(ModItemTags.BARRELS);
 			this.root.getChild(PartNames.ARMS).visible = !wearingBarrel;
-			this.head.visible = !wearingBarrel;
+			this.head.visible &= !wearingBarrel;
 			if (wearingBarrel) {
 				this.hat.y = 1.5f;
 				if (entity instanceof final VillagerDataHolder villagerData &&
@@ -54,7 +55,7 @@ public abstract class VillagerModelMixin extends HierarchicalModel implements He
 				}
 			}
 		} else if (entity instanceof final Witch witch) {
-			wearingBarrel = witch.getItemBySlot(EquipmentSlot.HEAD).is(Items.BARREL);
+			wearingBarrel = witch.getItemBySlot(EquipmentSlot.HEAD).is(ModItemTags.BARRELS);
 			this.root.getChild(PartNames.ARMS).visible = !wearingBarrel;
 			if (wearingBarrel) {
 				this.hat.y = -13.03125f;
@@ -75,9 +76,9 @@ public abstract class VillagerModelMixin extends HierarchicalModel implements He
 									final CallbackInfo ci) {
 		boolean wearingBarrel = false;
 		if (entity instanceof final AbstractVillager merchant) {
-			wearingBarrel = merchant.getItemBySlot(EquipmentSlot.HEAD).is(Items.BARREL);
+			wearingBarrel = merchant.getItemBySlot(EquipmentSlot.HEAD).is(ModItemTags.BARRELS);
 		} else if (entity instanceof final Witch witch) {
-			wearingBarrel = witch.getItemBySlot(EquipmentSlot.HEAD).is(Items.BARREL);
+			wearingBarrel = witch.getItemBySlot(EquipmentSlot.HEAD).is(ModItemTags.BARRELS);
 		}
 		if (wearingBarrel) {
 			this.head.xRot = 0.0f;

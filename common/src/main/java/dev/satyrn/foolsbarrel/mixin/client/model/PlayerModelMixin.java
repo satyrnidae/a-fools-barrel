@@ -40,12 +40,12 @@ public abstract class PlayerModelMixin extends HumanoidModel {
 							   final float headPitch,
 							   final CallbackInfo ci) {
 		// These aren't being set right via the biped model hiding for some reason; setting them manually.
-		this.ear.visible = this.head.visible;
-		this.cloak.visible = this.body.visible;
-		this.jacket.visible = this.body.visible;
-		this.leftSleeve.visible = this.leftArm.visible;
-		this.rightSleeve.visible = this.rightArm.visible;
-		this.leftPants.visible = this.leftLeg.visible;
-		this.rightPants.visible = this.rightLeg.visible;
+		this.ear.visible &= this.head.visible;
+		this.cloak.visible &= this.body.visible;
+		this.jacket.visible &= this.body.visible;
+		this.leftSleeve.visible &= this.leftArm.visible;
+		this.rightSleeve.visible &= this.rightArm.visible;
+		this.leftPants.visible &= this.leftLeg.visible;
+		this.rightPants.visible &= this.rightLeg.visible;
 	}
 }

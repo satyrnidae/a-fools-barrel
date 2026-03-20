@@ -1,6 +1,8 @@
 package dev.satyrn.foolsbarrel.mixin.client.player;
 
 import com.mojang.authlib.GameProfile;
+import dev.satyrn.foolsbarrel.FoolsBarrelCommon;
+import dev.satyrn.foolsbarrel.data.tags.ModItemTags;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.multiplayer.ClientLevel;
@@ -30,7 +32,7 @@ public abstract class LocalPlayerMixin extends AbstractClientPlayer {
 
 	@Inject(method = "aiStep()V", at = @At("TAIL"))
 	void foolsBarrel$aiStep(final CallbackInfo ci) {
-		if (this.getItemBySlot(EquipmentSlot.HEAD).is(Items.BARREL) && this.isCrouching()) {
+		if (this.getItemBySlot(EquipmentSlot.HEAD).is(ModItemTags.BARRELS) && this.isCrouching() && FoolsBarrelCommon.getCommonConfig().getSnapHidingPlayersToGrid()) {
 			this.setPos(Mth.floor(this.getX()) + 0.5D, this.getY(), Mth.floor(this.getZ()) + 0.5D);
 		}
 	}

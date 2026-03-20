@@ -25,7 +25,6 @@
     "client.renderer.entity.layers.ItemInHandLayerMixin"
   ],
   "mixins": [
-    "world.entity.LivingEntityMixin",
     "world.entity.ai.goal.AvoidEntityGoalMixin",
     "world.entity.ai.goal.LeapAtTargetGoalMixin",
     "world.entity.ai.goal.LookAtPlayerGoalMixin",
@@ -33,9 +32,8 @@
     "world.entity.ai.goal.RangedAttackGoalMixin",
     "world.entity.ai.goal.RangedCrossbowAttackGoalMixin",
     "world.entity.ai.goal.SwellGoalMixin",
+    "world.entity.ai.goal.target.TargetGoalMixin",
     "world.entity.player.PlayerMixin",
-    "world.item.BlockItemMixin",
-    "world.item.ItemMixin",
     "world.level.block.BarrelBlockMixin"
   ],
   "injectors": {

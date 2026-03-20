@@ -1,7 +1,7 @@
-@MethodsReturnNonnullByDefault @FieldsAreNonnullByDefault @ParametersAreNonnullByDefault @VariablesAreNonnullByDefault
+@FieldsAreNonnullByDefault @MethodsReturnNonnullByDefault @ParametersAreNonnullByDefault @VariablesAreNonnullByDefault
 package dev.satyrn.foolsbarrel.forge.client.gui.overlay;
 
-import dev.satyrn.foolsbarrel.annotations.VariablesAreNonnullByDefault;
+import dev.satyrn.lepidoptera.annotations.VariablesAreNonnullByDefault;
 import net.minecraft.FieldsAreNonnullByDefault;
 import net.minecraft.MethodsReturnNonnullByDefault;
 

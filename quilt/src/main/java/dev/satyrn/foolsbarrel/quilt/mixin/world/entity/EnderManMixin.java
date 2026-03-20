@@ -1,5 +1,7 @@
 package dev.satyrn.foolsbarrel.quilt.mixin.world.entity;
 
+import dev.satyrn.foolsbarrel.FoolsBarrelCommon;
+import dev.satyrn.foolsbarrel.data.tags.ModItemTags;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.NeutralMob;
 import net.minecraft.world.entity.monster.EnderMan;
@@ -27,7 +29,7 @@ public abstract class EnderManMixin extends Monster implements NeutralMob {
 	void foolsBarrel$isLookingAtMe(final Player player,
 								   final CallbackInfoReturnable<Boolean> cir,
 								   final ItemStack itemStack) {
-		if (itemStack.is(Items.BARREL)) {
+		if (FoolsBarrelCommon.getCommonConfig().getShouldBarrelHideSightline() && itemStack.is(ModItemTags.BARRELS)) {
 			cir.setReturnValue(false);
 			cir.cancel();
 		}

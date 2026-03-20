@@ -1,7 +1,7 @@
 @FieldsAreNonnullByDefault @MethodsReturnNonnullByDefault @ParametersAreNonnullByDefault @VariablesAreNonnullByDefault
-package dev.satyrn.foolsbarrel.api.extensions;
+package dev.satyrn.foolsbarrel.config.partitions;
 
-import dev.satyrn.foolsbarrel.annotations.VariablesAreNonnullByDefault;
+import dev.satyrn.lepidoptera.annotations.VariablesAreNonnullByDefault;
 import net.minecraft.FieldsAreNonnullByDefault;
 import net.minecraft.MethodsReturnNonnullByDefault;
 

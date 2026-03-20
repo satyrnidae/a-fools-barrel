@@ -1,7 +1,7 @@
 @FieldsAreNonnullByDefault @MethodsReturnNonnullByDefault @ParametersAreNonnullByDefault @VariablesAreNonnullByDefault
 package dev.satyrn.foolsbarrel.fabric.mixin.world.entity;
 
-import dev.satyrn.foolsbarrel.annotations.VariablesAreNonnullByDefault;
+import dev.satyrn.lepidoptera.annotations.VariablesAreNonnullByDefault;
 import net.minecraft.FieldsAreNonnullByDefault;
 import net.minecraft.MethodsReturnNonnullByDefault;
 

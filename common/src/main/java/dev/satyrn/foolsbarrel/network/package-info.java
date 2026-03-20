@@ -1,5 +1,5 @@
 @MethodsReturnNonnullByDefault @FieldsAreNonnullByDefault @ParametersAreNonnullByDefault
-package dev.satyrn.foolsbarrel.forge.data.server;
+package dev.satyrn.foolsbarrel.network;
 
 import net.minecraft.FieldsAreNonnullByDefault;
 import net.minecraft.MethodsReturnNonnullByDefault;

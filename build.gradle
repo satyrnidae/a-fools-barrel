@@ -33,6 +33,32 @@ subprojects {
 			name = 'ParchmentMC'
 			url = 'https://maven.parchmentmc.org'
 		}
+		maven {
+			name = "Shedaniel Maven"
+			url "https://maven.shedaniel.me/"
+		}
+		maven {
+			name = "TerraformersMC Releases"
+			url "https://maven.terraformersmc.com/releases/"
+		}
+		maven {
+			name = "TerraformersMC"
+			url = "https://maven.terraformersmc.com/"
+		}
+		maven {
+			name = "Illusive Soulworks maven"
+			url = "https://maven.theillusivec4.top/"
+		}
+		maven {
+			url "https://maven2.bai.lol"
+			content {
+				includeGroup "lol.bai"
+			}
+		}
+		maven {
+			name = "Satyrn Maven"
+			url = "https://maven.satyrn.dev"
+		}
     }
 
     loom {
@@ -46,9 +72,9 @@ subprojects {
         minecraft "net.minecraft:minecraft:$rootProject.minecraft_version"
 		mappings loom.layered() {
 			officialMojangMappings()
-			parchment("org.parchmentmc.data:parchment-1.19.2:2022.11.27@zip")
+			parchment("org.parchmentmc.data:parchment-${rootProject.minecraft_version}:${rootProject.parchment_mappings_version}@zip")
 		}
-		implementation("com.google.code.findbugs:jsr305:3.0.2")
+		implementation("com.google.code.findbugs:jsr305:${rootProject.jsr305_version}")
     }
 
     java {
