@@ -2,25 +2,24 @@
 	"schema_version": 1,
 	"quilt_loader": {
 		"group": "${group}",
-		"id": "foolsbarrel",
+		"id": "example_mod",
 		"version": "${version}",
 		"metadata": {
-			"name": "A Fool's Barrel",
-			"description": "A port of the wearable barrel functionality from the April Fool's Day 2022 update.",
+			"name": "Mod Name",
+			"description": "A short description of your mod.",
 			"contributors": {
-				"satyrnidae": "Owner"
+				"Your name here": "Owner"
 			},
 			"contact": {
-				"homepage": "https://satyrn.dev/projects/mc-foolsday-2022-port",
-				"issues": "https://github.com/satyrnidae/a-fools-barrel/issues",
-				"sources": "https://github.com/satyrnidae/a-fools-barrel"
+				"homepage": "https://example.com/",
+				"issues": "https://github.com/QuiltMC/quilt-template-mod/issues",
+				"sources": "https://github.com/QuiltMC/quilt-template-mod"
 			},
-			"icon": "assets/foolsbarrel/icon.png"
+			"icon": "assets/example_mod/icon.png"
 		},
 		"intermediate_mappings": "net.fabricmc:intermediary",
 		"entrypoints": {
-			"main": "dev.satyrn.foolsbarrel.FoolsBarrel",
-			"client": "dev.satyrn.foolsbarrel.client.FoolsBarrelClient"
+			"init": "com.example.example_mod.ExampleMod"
 		},
 		"depends": [
 			{
@@ -28,8 +27,8 @@
 				"versions": ">=0.19.1"
 			},
 			{
-				"id": "fabric-api",
-				"versions": "*"
+				"id": "quilted_fabric_api",
+				"versions": ">=7.0.2"
 			},
 			{
 				"id": "minecraft",
@@ -37,5 +36,5 @@
 			}
 		]
 	},
-	"mixin": "foolsbarrel.mixins.json"
+	"mixin": "example_mod.mixins.json"
 }
