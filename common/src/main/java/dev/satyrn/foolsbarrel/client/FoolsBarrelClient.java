@@ -9,7 +9,7 @@ import org.apache.logging.log4j.Level;
 @Environment(EnvType.CLIENT)
 public final class FoolsBarrelClient {
 	private FoolsBarrelClient() {
-		NotInitializable.staticClass(FoolsBarrelClient.class);
+		NotInitializable.staticClass(this);
 	}
 
 	public static void initClient() {

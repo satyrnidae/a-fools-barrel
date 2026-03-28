@@ -10,7 +10,7 @@ public class ModItemTags {
 	public static final TagKey<Item> BARRELS = register("barrels");
 
 	private ModItemTags() {
-		NotInitializable.staticClass(ModItemTags.class);
+		NotInitializable.staticClass(this);
 	}
 
 	public static TagKey<Item> register(String name) {
