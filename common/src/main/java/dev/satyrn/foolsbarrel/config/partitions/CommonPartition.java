@@ -1,7 +1,7 @@
 package dev.satyrn.foolsbarrel.config.partitions;
 
 import dev.satyrn.foolsbarrel.api.config.CommonConfig;
-import dev.satyrn.lepidoptera.annotations.YamlComment;
+import dev.satyrn.lepidoptera.api.config.serializers.YamlComment;
 import me.shedaniel.autoconfig.annotation.Config;
 import me.shedaniel.autoconfig.annotation.ConfigEntry;
 
@@ -20,6 +20,7 @@ public class CommonPartition implements CommonConfig<CommonPartition> {
 	@ConfigEntry.Gui.RequiresRestart(false) private boolean shouldBarrelHideSightline = true;
 	@ConfigEntry.Gui.RequiresRestart(false) private boolean shouldAnimalsIgnoreHidingPlayers = true;
 	@ConfigEntry.Gui.RequiresRestart(false) private boolean shouldHidingRemoveMobAggro = true;
+	@ConfigEntry.Gui.RequiresRestart(false) private boolean shouldAllowHidingPlayerInventory = true;
 
 	public CommonPartition() {
 	}
@@ -33,7 +34,7 @@ public class CommonPartition implements CommonConfig<CommonPartition> {
 
 	@SuppressWarnings("unused")
 	public void setSnapHidingPlayersToGrid(final boolean value) {
-		this.snapHidingPlayersToGrid = false;
+		this.snapHidingPlayersToGrid = value;
 	}
 
 	@Override
@@ -85,11 +86,23 @@ public class CommonPartition implements CommonConfig<CommonPartition> {
 	}
 
 	@Override
+	@BeanProperty
+	@YamlComment(value = "Whether other players can open hiding players' inventory like a barrel.", note = "This will allow players to steal inventory contents!")
+	public boolean getAllowHidingPlayerInventory() {
+		return this.shouldAllowHidingPlayerInventory;
+	}
+
+	public void setAllowHidingPlayerInventory(final boolean value) {
+		this.shouldAllowHidingPlayerInventory = value;
+	}
+
+	@Override
 	public void copyFrom(final CommonPartition other) {
 		this.snapHidingPlayersToGrid = other.snapHidingPlayersToGrid;
 		this.shouldBarrelHideSightline = other.shouldBarrelHideSightline;
 		this.allowJumping = other.allowJumping;
 		this.shouldAnimalsIgnoreHidingPlayers = other.shouldAnimalsIgnoreHidingPlayers;
 		this.shouldHidingRemoveMobAggro = other.shouldHidingRemoveMobAggro;
+		this.shouldAllowHidingPlayerInventory = other.shouldAllowHidingPlayerInventory;
 	}
 }

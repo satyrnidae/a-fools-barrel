@@ -22,7 +22,7 @@ import javax.annotation.Nullable;
 public abstract class MeleeAttackGoalMixin extends Goal {
 	@Shadow @Final protected PathfinderMob mob;
 
-	@Inject(method = "canUse()Z", at = @At(value = "INVOKE_ASSIGN", target = "net/minecraft/world/entity/PathfinderMob.getTarget ()Lnet/minecraft/world/entity/LivingEntity;", ordinal = 0), locals = LocalCapture.CAPTURE_FAILSOFT, cancellable = true)
+	@Inject(method = "canUse()Z", at = @At(value = "INVOKE_ASSIGN", target = "net/minecraft/world/entity/PathfinderMob.getTarget()Lnet/minecraft/world/entity/LivingEntity;", ordinal = 0), locals = LocalCapture.CAPTURE_FAILSOFT, cancellable = true)
 	void foolsBarrel$canUse(final CallbackInfoReturnable<Boolean> cir,
 							final long l,
 							final @Nullable LivingEntity livingEntity) {
@@ -39,7 +39,7 @@ public abstract class MeleeAttackGoalMixin extends Goal {
 		}
 	}
 
-	@Inject(method = "canContinueToUse()Z", at = @At(value = "INVOKE_ASSIGN", target = "net/minecraft/world/entity/PathfinderMob.getTarget ()Lnet/minecraft/world/entity/LivingEntity;", ordinal = 0), locals = LocalCapture.CAPTURE_FAILSOFT, cancellable = true)
+	@Inject(method = "canContinueToUse()Z", at = @At(value = "INVOKE_ASSIGN", target = "net/minecraft/world/entity/PathfinderMob.getTarget()Lnet/minecraft/world/entity/LivingEntity;", ordinal = 0), locals = LocalCapture.CAPTURE_FAILSOFT, cancellable = true)
 	void foolsbarrel$canContinueToUse(final CallbackInfoReturnable<Boolean> cir,
 									  final @Nullable LivingEntity livingEntity) {
 		if (this.mob.getItemBySlot(EquipmentSlot.HEAD).is(ModItemTags.BARRELS)) {

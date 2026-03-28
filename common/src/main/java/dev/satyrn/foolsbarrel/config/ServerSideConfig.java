@@ -2,7 +2,7 @@ package dev.satyrn.foolsbarrel.config;
 
 import dev.satyrn.foolsbarrel.FoolsBarrelCommon;
 import dev.satyrn.foolsbarrel.config.partitions.ServerPartition;
-import dev.satyrn.lepidoptera.annotations.YamlComment;
+import dev.satyrn.lepidoptera.api.config.serializers.YamlComment;
 import me.shedaniel.autoconfig.annotation.Config;
 import me.shedaniel.autoconfig.annotation.ConfigEntry;
 import me.shedaniel.autoconfig.serializer.PartitioningSerializer;

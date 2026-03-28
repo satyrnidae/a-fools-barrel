@@ -1,7 +1,7 @@
 {
   "required": true,
   "package": "dev.satyrn.foolsbarrel.mixin",
-  "compatibilityLevel": "JAVA_17",
+  "compatibilityLevel": "JAVA_21",
   "minVersion": "0.8",
   "client": [
     "client.CameraMixin",
@@ -33,8 +33,7 @@
     "world.entity.ai.goal.RangedCrossbowAttackGoalMixin",
     "world.entity.ai.goal.SwellGoalMixin",
     "world.entity.ai.goal.target.TargetGoalMixin",
-    "world.entity.player.PlayerMixin",
-    "world.level.block.BarrelBlockMixin"
+    "world.entity.player.PlayerMixin"
   ],
   "injectors": {
     "defaultRequire": 1

@@ -22,7 +22,7 @@ import javax.annotation.Nonnull;
 public abstract class TargetGoalMixin extends Goal {
 	@Final @Shadow protected Mob mob;
 
-	@Inject(method = "canContinueToUse", at = @At(value = "INVOKE", target = "net/minecraft/world/entity/Mob.getTeam ()Lnet/minecraft/world/scores/Team;"), locals = LocalCapture.CAPTURE_FAILHARD, cancellable = true)
+	@Inject(method = "canContinueToUse", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/Mob;getTeam()Lnet/minecraft/world/scores/PlayerTeam;"), locals = LocalCapture.CAPTURE_FAILHARD, cancellable = true)
 	void foolsBarrel$canContinueToUse(final @Nonnull CallbackInfoReturnable<Boolean> cir,
 									  final @Nonnull LivingEntity livingEntity) {
 		if(this.mob.getItemBySlot(EquipmentSlot.HEAD).is(ModItemTags.BARRELS)) {

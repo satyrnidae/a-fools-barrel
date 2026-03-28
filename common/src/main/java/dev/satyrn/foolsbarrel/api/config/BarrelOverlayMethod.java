@@ -1,13 +1,14 @@
 package dev.satyrn.foolsbarrel.api.config;
 
-import dev.satyrn.lepidoptera.annotations.YamlComment;
+import dev.satyrn.lepidoptera.api.config.serializers.YamlComment;
 
 public enum BarrelOverlayMethod {
 	@YamlComment("The barrel overlay will not render at all.")
-	DISABLED,
+    foolsbarrel$overlay$disabled,
 	@YamlComment("""
 		The barrel overlay will render pinned in space vertically; that is, it will move with the camera when looking left and right, but not up and down.
-		This matches the original functionality from the April Fools snapshot.""") PIN_VERTICALLY,
+		This matches the original functionality from the April Fools snapshot.""")
+	foolsbarrel$overlay$pin_vertically,
 	@YamlComment("The barrel overlay is pinned to the player's camera, acting identically to the pumpkin overlay.")
-	MOVE_WITH_LOOK
+	foolsbarrel$overlay$move_with_look
 }

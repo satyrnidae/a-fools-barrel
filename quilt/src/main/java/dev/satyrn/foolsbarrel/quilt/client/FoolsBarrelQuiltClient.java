@@ -1,15 +1,15 @@
 package dev.satyrn.foolsbarrel.quilt.client;
 
 import dev.satyrn.foolsbarrel.fabriclike.client.FoolsBarrelFabricLikeClient;
-import org.quiltmc.loader.api.ModContainer;
-import org.quiltmc.loader.api.minecraft.ClientOnly;
-import org.quiltmc.qsl.base.api.entrypoint.client.ClientModInitializer;
+import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 
-@ClientOnly
+@Environment(EnvType.CLIENT)
 @SuppressWarnings("unused")
 public final class FoolsBarrelQuiltClient implements ClientModInitializer {
 	@Override
-	public void onInitializeClient(ModContainer modContainer) {
+	public void onInitializeClient() {
 		FoolsBarrelFabricLikeClient.initClient();
 	}
 }

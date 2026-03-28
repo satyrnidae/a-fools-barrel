@@ -1,8 +1,8 @@
 package dev.satyrn.foolsbarrel.data.tags;
 
 import dev.satyrn.foolsbarrel.FoolsBarrelCommon;
-import dev.satyrn.lepidoptera.util.NotInitializable;
-import net.minecraft.core.Registry;
+import dev.satyrn.lepidoptera.api.NotInitializable;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 
@@ -14,6 +14,6 @@ public class ModItemTags {
 	}
 
 	public static TagKey<Item> register(String name) {
-		return TagKey.create(Registry.ITEM_REGISTRY, FoolsBarrelCommon.createId(name));
+		return TagKey.create(Registries.ITEM, FoolsBarrelCommon.createId(name));
 	}
 }

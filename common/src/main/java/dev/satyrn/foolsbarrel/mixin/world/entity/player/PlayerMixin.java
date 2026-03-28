@@ -11,6 +11,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.world.entity.EntityDimensions;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -44,22 +45,20 @@ public abstract class PlayerMixin extends LivingEntity {
 		final Pose pose = this.getPose();
 		if (this.foolsBarrel$previousPose != pose && this.getItemBySlot(EquipmentSlot.HEAD).is(ModItemTags.BARRELS)) {
 			if (this.foolsBarrel$previousPose == Pose.CROUCHING) {
-				this.level.playSound(null, this, SoundEvents.BARREL_OPEN, SoundSource.BLOCKS, 1, 1);
+				this.level().playSound(null, this, SoundEvents.BARREL_OPEN, SoundSource.BLOCKS, 1, 1);
 			} else {
-				this.level.playSound(null, this, SoundEvents.BARREL_CLOSE, SoundSource.BLOCKS, 1, 1);
+				this.level().playSound(null, this, SoundEvents.BARREL_CLOSE, SoundSource.BLOCKS, 1, 1);
 			}
 		}
 	}
 
-	@Inject(method = "getStandingEyeHeight(Lnet/minecraft/world/entity/Pose;Lnet/minecraft/world/entity/EntityDimensions;)F", at = @At("HEAD"), cancellable = true)
-	void foolsBarrel$getStandingEyeHeight(final Pose pose,
-										  final EntityDimensions dimensions,
-										  final CallbackInfoReturnable<Float> cir) {
+	@Inject(method = "getDefaultDimensions(Lnet/minecraft/world/entity/Pose;)Lnet/minecraft/world/entity/EntityDimensions;", at = @At("RETURN"), cancellable = true)
+	void foolsBarrel$getDefaultDimensions(final Pose pose,
+										  final CallbackInfoReturnable<EntityDimensions> cir) {
 		if (pose == Pose.CROUCHING &&
 			this.inventory != null &&
 			this.getItemBySlot(EquipmentSlot.HEAD).is(ModItemTags.BARRELS)) {
-			cir.setReturnValue(0.667F);
-			cir.cancel();
+			cir.setReturnValue(cir.getReturnValue().withEyeHeight(0.667F));
 		}
 	}
 

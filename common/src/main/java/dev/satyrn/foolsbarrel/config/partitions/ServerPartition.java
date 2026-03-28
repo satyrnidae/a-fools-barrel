@@ -1,7 +1,7 @@
 package dev.satyrn.foolsbarrel.config.partitions;
 
 import dev.satyrn.foolsbarrel.api.config.ServerConfig;
-import dev.satyrn.lepidoptera.annotations.YamlComment;
+import dev.satyrn.lepidoptera.api.config.serializers.YamlComment;
 import me.shedaniel.autoconfig.annotation.Config;
 import me.shedaniel.autoconfig.annotation.ConfigEntry;
 
@@ -18,6 +18,7 @@ public class ServerPartition implements ServerConfig<ServerPartition> {
 	@ConfigEntry.Gui.RequiresRestart(false) private boolean shouldAnimalsIgnoreHidingPlayers = true;
 	@ConfigEntry.Gui.RequiresRestart(false) private boolean shouldHidingRemoveMobAggro = true;
 	@ConfigEntry.Gui.RequiresRestart(false) private boolean shouldOverrideClientConfig = true;
+	@ConfigEntry.Gui.RequiresRestart(false) private boolean shouldAllowHidingPlayerInventory = true;
 	@ConfigEntry.Gui.TransitiveObject
 	@ConfigEntry.Category("clientOverrides")
 	private final ClientPartition clientOverrides = new ClientPartition();
@@ -99,6 +100,17 @@ public class ServerPartition implements ServerConfig<ServerPartition> {
 
 	@Override
 	@BeanProperty
+	@YamlComment(value = "Whether other players can open hiding players' inventory like a barrel.", note = "This will allow players to steal inventory contents!")
+	public boolean getAllowHidingPlayerInventory() {
+		return this.shouldAllowHidingPlayerInventory;
+	}
+
+	public void setAllowHidingPlayerInventory(final boolean value) {
+		this.shouldAllowHidingPlayerInventory = value;
+	}
+
+	@Override
+	@BeanProperty
 	@YamlComment(value = "Client-specific values that the server will override on clients.", emitType = false)
 	public ClientPartition getClientOverrides() {
 		return this.clientOverrides;
@@ -117,6 +129,7 @@ public class ServerPartition implements ServerConfig<ServerPartition> {
 		this.shouldAnimalsIgnoreHidingPlayers = other.shouldAnimalsIgnoreHidingPlayers;
 		this.shouldHidingRemoveMobAggro = other.shouldHidingRemoveMobAggro;
 		this.shouldOverrideClientConfig = other.shouldOverrideClientConfig;
+		this.shouldAllowHidingPlayerInventory = other.shouldAllowHidingPlayerInventory;
 		this.setClientOverrides(other.getClientOverrides());
 	}
 }

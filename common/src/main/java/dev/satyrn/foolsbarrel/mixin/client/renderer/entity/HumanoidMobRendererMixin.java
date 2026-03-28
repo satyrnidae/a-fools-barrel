@@ -2,7 +2,7 @@ package dev.satyrn.foolsbarrel.mixin.client.renderer.entity;
 
 import dev.satyrn.foolsbarrel.client.BarrelLayer;
 import dev.satyrn.foolsbarrel.api.extensions.client.renderer.entity.layers.BipedLayerExtensions;
-import dev.satyrn.lepidoptera.mixin.accessors.net.minecraft.client.renderer.entity.LivingEntityRendererAccessor;
+import dev.satyrn.lepidoptera.api.accessors.client.LivingEntityRendererAccessor;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.model.HumanoidModel;
@@ -43,7 +43,7 @@ public abstract class HumanoidMobRendererMixin extends MobRenderer {
 		this.addLayer(new BarrelLayer(this));
 
 		// Find the extant head feature renderer and set the biped flag to true
-		Optional<RenderLayer> headFeatureRenderer = ((LivingEntityRendererAccessor) this).getLayers()
+		Optional<RenderLayer<?, ?>> headFeatureRenderer = ((LivingEntityRendererAccessor) this).getLayers()
 			.stream()
 			.filter(item -> item instanceof CustomHeadLayer)
 			.findFirst();

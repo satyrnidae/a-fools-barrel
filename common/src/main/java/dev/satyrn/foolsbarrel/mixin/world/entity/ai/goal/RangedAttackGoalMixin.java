@@ -22,7 +22,7 @@ import javax.annotation.Nullable;
 public abstract class RangedAttackGoalMixin extends Goal {
 	@Shadow @Final private Mob mob;
 
-	@Inject(method = "canUse()Z", at = @At(value = "INVOKE_ASSIGN", target = "net/minecraft/world/entity/Mob.getTarget ()Lnet/minecraft/world/entity/LivingEntity;", ordinal = 0), locals = LocalCapture.CAPTURE_FAILSOFT, cancellable = true)
+	@Inject(method = "canUse()Z", at = @At(value = "INVOKE_ASSIGN", target = "net/minecraft/world/entity/Mob.getTarget()Lnet/minecraft/world/entity/LivingEntity;", ordinal = 0), locals = LocalCapture.CAPTURE_FAILSOFT, cancellable = true)
 	void foolsBarrel$canUse(final CallbackInfoReturnable<Boolean> cir, final @Nullable LivingEntity livingEntity) {
 		if (this.mob.getItemBySlot(EquipmentSlot.HEAD).is(ModItemTags.BARRELS)) {
 			cir.setReturnValue(false);

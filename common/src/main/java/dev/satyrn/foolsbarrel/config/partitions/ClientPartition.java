@@ -3,7 +3,7 @@ package dev.satyrn.foolsbarrel.config.partitions;
 import dev.satyrn.foolsbarrel.api.config.BarrelOverlayMethod;
 import dev.satyrn.foolsbarrel.api.config.ClientConfig;
 import dev.satyrn.foolsbarrel.api.config.NametagOptions;
-import dev.satyrn.lepidoptera.annotations.YamlComment;
+import dev.satyrn.lepidoptera.api.config.serializers.YamlComment;
 
 import me.shedaniel.autoconfig.annotation.Config;
 import me.shedaniel.autoconfig.annotation.ConfigEntry;
@@ -23,10 +23,10 @@ public class ClientPartition implements ClientConfig<ClientPartition> {
 	@ConfigEntry.Gui.RequiresRestart(false) private boolean adjustCameraInBarrel = true;
 	@ConfigEntry.Gui.RequiresRestart(false)
 	@ConfigEntry.Gui.EnumHandler(option = ConfigEntry.Gui.EnumHandler.EnumDisplayOption.BUTTON)
-	private BarrelOverlayMethod overlayMethod = BarrelOverlayMethod.PIN_VERTICALLY;
+	private BarrelOverlayMethod overlayMethod = BarrelOverlayMethod.foolsbarrel$overlay$pin_vertically;
 	@ConfigEntry.Gui.RequiresRestart(false)
 	@ConfigEntry.Gui.EnumHandler(option = ConfigEntry.Gui.EnumHandler.EnumDisplayOption.BUTTON)
-	private NametagOptions hideNametag = NametagOptions.WHEN_CROUCHED;
+	private NametagOptions hideNametag = NametagOptions.foolsbarrel$nametag$when_crouched;
 
 	public ClientPartition() {
 	}
@@ -54,7 +54,7 @@ public class ClientPartition implements ClientConfig<ClientPartition> {
 
 	@SuppressWarnings("unused")
 	public void setOverlayMethod(final @Nullable BarrelOverlayMethod value) {
-		this.overlayMethod = Optional.ofNullable(value).orElse(BarrelOverlayMethod.PIN_VERTICALLY);
+		this.overlayMethod = Optional.ofNullable(value).orElse(BarrelOverlayMethod.foolsbarrel$overlay$pin_vertically);
 	}
 
 	@Override
@@ -67,7 +67,7 @@ public class ClientPartition implements ClientConfig<ClientPartition> {
 
 	@SuppressWarnings("unused")
 	public void setHideNametag(final @Nullable NametagOptions value) {
-		this.hideNametag = Optional.ofNullable(value).orElse(NametagOptions.WHEN_CROUCHED);
+		this.hideNametag = Optional.ofNullable(value).orElse(NametagOptions.foolsbarrel$nametag$when_crouched);
 	}
 
 	@Override

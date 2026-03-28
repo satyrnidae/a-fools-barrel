@@ -6,7 +6,7 @@ import dev.satyrn.foolsbarrel.api.config.ClientConfig;
 import dev.satyrn.foolsbarrel.api.config.NametagOptions;
 import dev.satyrn.foolsbarrel.api.extensions.client.renderer.entity.layers.BipedLayerExtensions;
 import dev.satyrn.foolsbarrel.client.BarrelLayer;
-import dev.satyrn.lepidoptera.mixin.accessors.net.minecraft.client.renderer.entity.LivingEntityRendererAccessor;
+import dev.satyrn.lepidoptera.api.accessors.client.LivingEntityRendererAccessor;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.model.EntityModel;
@@ -48,7 +48,7 @@ public abstract class PlayerRendererMixin extends LivingEntityRenderer {
 		this.addLayer(new BarrelLayer(this));
 
 		// Find the extant head feature renderer and set the biped flag to true
-		Optional<RenderLayer> headFeatureRenderer = ((LivingEntityRendererAccessor) this).getLayers()
+		Optional<RenderLayer<?, ?>> headFeatureRenderer = ((LivingEntityRendererAccessor) this).getLayers()
 			.stream()
 			.filter(item -> item instanceof CustomHeadLayer)
 			.findFirst();
@@ -57,17 +57,18 @@ public abstract class PlayerRendererMixin extends LivingEntityRenderer {
 			() -> Logger.getLogger("minecraft").log(Level.INFO, "Um there is no head renderer"));
 	}
 
-	@Inject(method = "renderNameTag(Lnet/minecraft/client/player/AbstractClientPlayer;Lnet/minecraft/network/chat/Component;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;I)V", at = @At("HEAD"), cancellable = true)
+	@Inject(method = "renderNameTag(Lnet/minecraft/client/player/AbstractClientPlayer;Lnet/minecraft/network/chat/Component;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;IF)V", at = @At("HEAD"), cancellable = true)
 	void foolsBarrel$renderNameTag(final AbstractClientPlayer clientPlayer,
 								   final Component component,
 								   final PoseStack poseStack,
 								   final MultiBufferSource buffer,
 								   final int i,
+								   final float partialTick,
 								   final CallbackInfo ci) {
 		// Hide player nametag if configured
 		final ClientConfig clientConfig = FoolsBarrelCommon.getClientConfig();
-		if (clientConfig.getHideNametag() != NametagOptions.NEVER) {
-			if (clientConfig.getHideNametag() == NametagOptions.ALWAYS || clientPlayer.isCrouching()) {
+		if (clientConfig.getHideNametag() != NametagOptions.foolsbarrel$nametag$never) {
+			if (clientConfig.getHideNametag() == NametagOptions.foolsbarrel$nametag$always || clientPlayer.isCrouching()) {
 				ci.cancel();
 			}
 		}

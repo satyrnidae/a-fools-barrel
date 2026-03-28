@@ -1,31 +1,30 @@
 package dev.satyrn.foolsbarrel;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import dev.architectury.event.events.client.ClientPlayerEvent;
-import dev.architectury.event.events.common.PlayerEvent;
 import dev.architectury.platform.Platform;
 import dev.architectury.utils.Env;
-import dev.satyrn.foolsbarrel.api.config.ServerConfig;
-import dev.satyrn.foolsbarrel.config.ClientSideConfig;
-import dev.satyrn.foolsbarrel.data.tags.ModItemTags;
-import dev.satyrn.foolsbarrel.network.ModPackets;
-import dev.satyrn.foolsbarrel.network.NetworkClientConfig;
-import dev.satyrn.foolsbarrel.network.NetworkCommonConfig;
-import dev.satyrn.lepidoptera.api.world.item.EquipmentRegistry;
-import dev.satyrn.lepidoptera.config.serializers.CommentedYamlConfigSerializer;
 import dev.satyrn.foolsbarrel.api.config.ClientConfig;
 import dev.satyrn.foolsbarrel.api.config.CommonConfig;
+import dev.satyrn.foolsbarrel.api.config.ServerConfig;
+import dev.satyrn.foolsbarrel.config.ClientSideConfig;
 import dev.satyrn.foolsbarrel.config.ServerSideConfig;
+import dev.satyrn.foolsbarrel.config.codecs.ClientPartitionCodec;
+import dev.satyrn.foolsbarrel.config.codecs.CommonPartitionCodec;
+import dev.satyrn.foolsbarrel.config.partitions.ClientPartition;
+import dev.satyrn.foolsbarrel.config.partitions.CommonPartition;
 import dev.satyrn.foolsbarrel.sounds.FoolsBarrelSoundEvents;
+import dev.satyrn.lepidoptera.api.ModMeta;
+import dev.satyrn.lepidoptera.api.config.sync.ConfigOverlay;
+import dev.satyrn.lepidoptera.api.config.sync.ServerConfigSync;
+import dev.satyrn.lepidoptera.api.config.sync.SyncedConfig;
+import dev.satyrn.lepidoptera.api.lang.T9n;
+import dev.satyrn.lepidoptera.api.config.serializers.CommentedYamlConfigSerializer;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.PartitioningSerializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.core.BlockSource;
+import net.minecraft.core.dispenser.BlockSource;
 import net.minecraft.core.dispenser.OptionalDispenseItemBehavior;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -36,34 +35,52 @@ import org.apache.logging.log4j.Logger;
 
 import javax.annotation.Nullable;
 
+@ModMeta(value = "foolsbarrel", name = "A Fool's Barrel", semVer = "21.1.0")
 public final class FoolsBarrelCommon {
     public static final String MOD_ID = "foolsbarrel";
-	private static final Logger LOGGER = LogManager.getLogger();
 	public static final int NETWORK_VERSION = 1;
-	private static final Gson GSON = new Gson();
+	public static final String I18N_VERSION_MISMATCH = T9n.netMsg(MOD_ID, "versionMismatch");
 
-	@Environment(EnvType.CLIENT)
-	private static @Nullable NetworkClientConfig CLIENT_CONFIG_OVERLAY;
-	private static @Nullable NetworkCommonConfig COMMON_CONFIG_OVERLAY;
+	private static final Logger LOGGER = LogManager.getLogger();
+
+	public static ServerConfigSync CONFIG_SYNC;
+	public static SyncedConfig<CommonPartition> SYNCED_COMMON;
+	public static SyncedConfig<ClientPartition> SYNCED_CLIENT;
 
 	private FoolsBarrelCommon() {
 	}
 
     public static void init() {
-		if (Platform.getEnvironment() == Env.CLIENT) {
-			AutoConfig.register(ClientSideConfig.class, PartitioningSerializer.wrap(CommentedYamlConfigSerializer::new));
-		} else {
-			AutoConfig.register(ServerSideConfig.class, PartitioningSerializer.wrap(CommentedYamlConfigSerializer::new));
-		}
-
-        // Write common init code here.
 		log(Level.INFO, "INIT: Registering sound events for A Fool's Barrel");
 		FoolsBarrelSoundEvents.register();
 
 		if (Platform.getEnvironment() == Env.CLIENT) {
-			ModPackets.initClient();
+			AutoConfig.register(ClientSideConfig.class, PartitioningSerializer.wrap(CommentedYamlConfigSerializer::new));
+
+			final var localCommon = AutoConfig.getConfigHolder(ClientSideConfig.class).getConfig().getCommon();
+			final var localClient = AutoConfig.getConfigHolder(ClientSideConfig.class).getConfig().getClient();
+			final var builder = ServerConfigSync.builder(MOD_ID)
+					.networkVersion(NETWORK_VERSION, I18N_VERSION_MISMATCH);
+			SYNCED_COMMON = builder.commonConfig(CommonPartitionCodec.INSTANCE, localCommon);
+			SYNCED_CLIENT = builder.clientOverride(() -> false, ClientPartitionCodec.INSTANCE, localClient);
+			CONFIG_SYNC = builder.register();
 		} else {
-			ModPackets.initServer();
+			AutoConfig.register(ServerSideConfig.class, PartitioningSerializer.wrap(CommentedYamlConfigSerializer::new));
+
+			final var server = AutoConfig.getConfigHolder(ServerSideConfig.class).getConfig().getServer();
+			final var builder = ServerConfigSync.builder(MOD_ID)
+					.networkVersion(NETWORK_VERSION, I18N_VERSION_MISMATCH);
+			builder.commonConfig(CommonPartitionCodec.INSTANCE, () -> {
+					final CommonPartition common = new CommonPartition();
+					common.setAllowJumping(server.getAllowJumping());
+					common.setShouldAnimalsIgnoreHidingPlayers(server.getShouldAnimalsIgnoreHidingPlayers());
+					common.setShouldBarrelHideSightline(server.getShouldBarrelHideSightline());
+					common.setShouldHidingRemoveMobAggro(server.getShouldHidingRemoveMobAggro());
+					common.setSnapHidingPlayersToGrid(server.getSnapHidingPlayersToGrid());
+					return common;
+				}, new ConfigOverlay<>());
+			builder.clientOverride(server::getShouldOverrideClientConfig, ClientPartitionCodec.INSTANCE, server.getClientOverrides());
+			CONFIG_SYNC = builder.register();
 		}
     }
 
@@ -76,10 +93,9 @@ public final class FoolsBarrelCommon {
 				return itemStack;
 			}
 		});
-		EquipmentRegistry.registerEquipment(EquipmentSlot.HEAD, ModItemTags.BARRELS);
 	}
 
-	public static void info(String msg, Object...fmt) {
+	public static void info(String msg, Object... fmt) {
 		log(Level.INFO, msg, fmt);
 	}
 
@@ -89,12 +105,12 @@ public final class FoolsBarrelCommon {
 
 	@Environment(EnvType.CLIENT)
 	public static ClientConfig<?> getClientConfig() {
-		return CLIENT_CONFIG_OVERLAY == null ? AutoConfig.getConfigHolder(ClientSideConfig.class).getConfig().getClient() : CLIENT_CONFIG_OVERLAY;
+		return SYNCED_CLIENT.get();
 	}
 
 	public static CommonConfig<?> getCommonConfig() {
 		if (Platform.getEnvironment() == Env.CLIENT) {
-			return COMMON_CONFIG_OVERLAY == null ? AutoConfig.getConfigHolder(ClientSideConfig.class).getConfig().getCommon() : COMMON_CONFIG_OVERLAY;
+			return SYNCED_COMMON.get();
 		}
 		return AutoConfig.getConfigHolder(ServerSideConfig.class).getConfig().getServer();
 	}
@@ -103,36 +119,6 @@ public final class FoolsBarrelCommon {
 	@SuppressWarnings("unused")
 	public static ServerConfig<?> getServerConfig() {
 		return AutoConfig.getConfigHolder(ServerSideConfig.class).getConfig().getServer();
-	}
-
-	@Environment(EnvType.CLIENT)
-	public static void setClientConfigOverlay(final NetworkClientConfig value) {
-		if (CLIENT_CONFIG_OVERLAY == null) {
-			CLIENT_CONFIG_OVERLAY = value;
-		} else {
-			CLIENT_CONFIG_OVERLAY.copyFrom(value);
-		}
-		info("Received new client-side config from the server: {}", GSON.toJson(value));
-	}
-
-	@Environment(EnvType.CLIENT)
-	public static void clearClientConfigOverlay() {
-		CLIENT_CONFIG_OVERLAY = null;
-	}
-
-	@Environment(EnvType.CLIENT)
-	public static void setCommonConfigOverlay(final NetworkCommonConfig value) {
-		if (COMMON_CONFIG_OVERLAY == null) {
-			COMMON_CONFIG_OVERLAY = value;
-		} else {
-			COMMON_CONFIG_OVERLAY.copyFrom(value);
-		}
-		info("Received new common config from the server: {}", GSON.toJson(value));
-	}
-
-	@Environment(EnvType.CLIENT)
-	public static void clearCommonConfigOverlay() {
-		COMMON_CONFIG_OVERLAY = null;
 	}
 
 	public static ResourceLocation createId(String path) {
