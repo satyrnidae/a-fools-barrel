@@ -1,15 +1,16 @@
 package dev.satyrn.foolsbarrel.api.config;
 
-import dev.satyrn.lepidoptera.config.NestingConfigData;
+import dev.satyrn.lepidoptera.api.config.NestingConfigData;
 import net.minecraft.network.FriendlyByteBuf;
-import org.apache.commons.lang3.NotImplementedException;
 
-public interface CommonConfig<T extends CommonConfig<T>> extends NestingConfigData<T>, NetConfig {
+public interface CommonConfig<T extends CommonConfig<T>> extends NestingConfigData<T> {
 	boolean getSnapHidingPlayersToGrid();
 	boolean getShouldBarrelHideSightline();
 	boolean getShouldAnimalsIgnoreHidingPlayers();
 	boolean getShouldHidingRemoveMobAggro();
 	boolean getAllowJumping();
+	boolean getAllowHidingPlayerInventory();
+	boolean getRandomRotateBarrel();
 
 	default void writeToBuffer(FriendlyByteBuf byteBuf) {
 		byteBuf.writeBoolean(this.getSnapHidingPlayersToGrid());
@@ -17,9 +18,7 @@ public interface CommonConfig<T extends CommonConfig<T>> extends NestingConfigDa
 		byteBuf.writeBoolean(this.getShouldAnimalsIgnoreHidingPlayers());
 		byteBuf.writeBoolean(this.getShouldHidingRemoveMobAggro());
 		byteBuf.writeBoolean(this.getAllowJumping());
-	}
-
-	default void readFromBuffer(FriendlyByteBuf byteBuf) {
-		throw new NotImplementedException();
+		byteBuf.writeBoolean(this.getAllowHidingPlayerInventory());
+		byteBuf.writeBoolean(this.getRandomRotateBarrel());
 	}
 }

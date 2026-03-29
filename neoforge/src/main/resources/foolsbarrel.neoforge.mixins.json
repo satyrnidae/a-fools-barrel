@@ -1,0 +1,14 @@
+{
+  "required": true,
+  "package": "dev.satyrn.foolsbarrel.neoforge.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "minVersion": "0.8",
+  "client": [
+  ],
+  "mixins": [
+    "world.entity.ai.goal.RangedBowAttackGoalMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

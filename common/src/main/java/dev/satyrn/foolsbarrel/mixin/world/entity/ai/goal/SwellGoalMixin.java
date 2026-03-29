@@ -24,7 +24,7 @@ public abstract class SwellGoalMixin extends Goal {
 	@Shadow @Nullable private LivingEntity target;
 	@Shadow @Final private Creeper creeper;
 
-	@Inject(method = "canUse()Z", at = @At(value = "INVOKE_ASSIGN", target = "net/minecraft/world/entity/monster/Creeper.getTarget ()Lnet/minecraft/world/entity/LivingEntity;", ordinal = 0), locals = LocalCapture.CAPTURE_FAILSOFT, cancellable = true)
+	@Inject(method = "canUse()Z", at = @At(value = "INVOKE_ASSIGN", target = "net/minecraft/world/entity/monster/Creeper.getTarget()Lnet/minecraft/world/entity/LivingEntity;", ordinal = 0), locals = LocalCapture.CAPTURE_FAILSOFT, cancellable = true)
 	void foolsBarrel$canUse(final CallbackInfoReturnable<Boolean> cir, final @Nullable LivingEntity livingEntity) {
 		if (this.creeper.getItemBySlot(EquipmentSlot.HEAD).is(ModItemTags.BARRELS)) {
 			cir.setReturnValue(false);

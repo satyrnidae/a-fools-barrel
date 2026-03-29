@@ -8,6 +8,13 @@ sourceSets {
 	}
 }
 
+loom {
+	mixin {
+		useLegacyMixinAp = true
+		defaultRefmapName = rootProject.name + "." + project.name + ".refmap.json";
+	}
+}
+
 dependencies {
     // We depend on Fabric Loader here to use the Fabric @Environment annotations,
     // which get remapped to the correct annotations on each platform.
@@ -28,5 +35,4 @@ dependencies {
 		exclude(group: "net.fabricmc")
 		exclude(group: "dev.architectury")
 	}
-	modCompileOnly "lol.bai:badpackets:fabric-${rootProject.badpackets_version}"
 }

@@ -21,10 +21,10 @@
     },
     "intermediate_mappings": "net.fabricmc:intermediary",
     "entrypoints": {
-      "init": [
+      "main": [
         "dev.satyrn.foolsbarrel.quilt.FoolsBarrelQuilt"
       ],
-			"client_init": [
+			"client": [
 				"dev.satyrn.foolsbarrel.quilt.client.FoolsBarrelQuiltClient"
 			],
 			"modmenu": [
@@ -37,33 +37,29 @@
         "version": "*"
       },
       {
-        "id": "quilt_base",
-        "version": "*"
+        "id": "minecraft",
+        "version": ">=1.21.1"
       },
       {
-        "id": "minecraft",
-        "version": "1.19.2"
+        "id": "java",
+        "version": ">=21"
       },
       {
         "id": "architectury",
-        "version": ">=6.6.92"
+        "version": ">=13.0.6"
       },
 			{
 				"id": "lepidoptera-api",
-				"version": ">=1902.3.1"
+				"version": ">=1.0.0+1.21.1"
 			},
 			{
 				"id": "cloth-config",
-				"version": ">=8.3.134"
+				"version": ">=15.0.140"
 			},
 			{
 				"id": "modmenu",
 				"optional": true,
-				"version": ">=4.1.2"
-			},
-			{
-				"id": "badpackets",
-				"version": ">=0.2.0"
+				"version": ">=11.0.3"
 			}
     ]
   },

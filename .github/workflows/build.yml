@@ -11,7 +11,7 @@ jobs:
     strategy:
       matrix:
         # Use these Java versions
-        java: [ 17 ]
+        java: [ 21 ]
         # and run on both Linux and Windows
         os: [ubuntu-20.04, windows-latest]
     runs-on: ${{ matrix.os }}
@@ -30,22 +30,22 @@ jobs:
         run: chmod +x ./gradlew
       - name: build
         run: ./gradlew build
-      - name: capture forge build artifacts
-        if: ${{ runner.os == 'Linux' && matrix.java == '17' }} # Only upload artifacts built from LTS java on one OS
+      - name: capture neoforge build artifacts
+        if: ${{ runner.os == 'Linux' && matrix.java == '21' }} # Only upload artifacts built from LTS java on one OS
         uses: actions/upload-artifact@v4.6.2
         with:
-          name: forge artifacts
-          path: forge/build/libs/
+          name: neoforge artifacts
+          path: neoforge/build/libs/
       - name: capture fabric build artifacts
-        if: ${{ runner.os == 'Linux' && matrix.java == '17' }}
+        if: ${{ runner.os == 'Linux' && matrix.java == '21' }}
         uses: actions/upload-artifact@v4.6.2
         with:
           name: fabric artifacts
           path: fabric/build/libs
       - name: capture quilt build artifacts
-        if: ${{ runner.os == 'Linux' && matrix.java == '17' }}
+        if: ${{ runner.os == 'Linux' && matrix.java == '21' }}
         uses: actions/upload-artifact@v4.6.2
         with:
           name: quilt artifacts
           path: quilt/build/libs
-      
+

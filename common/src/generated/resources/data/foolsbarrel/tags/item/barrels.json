@@ -1,0 +1,13 @@
+{
+  "values": [
+    "minecraft:barrel",
+    {
+      "id": "c:barrels",
+      "required": false
+    },
+    {
+      "id": "c:barrels/wooden",
+      "required": false
+    }
+  ]
+}

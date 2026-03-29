@@ -33,6 +33,7 @@ public abstract class LivingEntityRendererMixin extends EntityRenderer implement
 									final float ageInTicks,
 									final float rotationYaw,
 									final float partialTicks,
+									final float scale,
 									final CallbackInfo ci) {
 		if (entityLiving.getItemBySlot(EquipmentSlot.HEAD).is(ModItemTags.BARRELS) && entityLiving.isCrouching()) {
 			ci.cancel();
