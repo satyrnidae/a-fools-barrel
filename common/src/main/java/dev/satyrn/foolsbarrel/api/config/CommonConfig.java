@@ -10,6 +10,7 @@ public interface CommonConfig<T extends CommonConfig<T>> extends NestingConfigDa
 	boolean getShouldHidingRemoveMobAggro();
 	boolean getAllowJumping();
 	boolean getAllowHidingPlayerInventory();
+	boolean getRandomRotateBarrel();
 
 	default void writeToBuffer(FriendlyByteBuf byteBuf) {
 		byteBuf.writeBoolean(this.getSnapHidingPlayersToGrid());
@@ -18,5 +19,6 @@ public interface CommonConfig<T extends CommonConfig<T>> extends NestingConfigDa
 		byteBuf.writeBoolean(this.getShouldHidingRemoveMobAggro());
 		byteBuf.writeBoolean(this.getAllowJumping());
 		byteBuf.writeBoolean(this.getAllowHidingPlayerInventory());
+		byteBuf.writeBoolean(this.getRandomRotateBarrel());
 	}
 }

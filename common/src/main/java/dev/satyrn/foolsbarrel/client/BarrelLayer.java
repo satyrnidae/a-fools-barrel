@@ -1,6 +1,8 @@
 package dev.satyrn.foolsbarrel.client;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import dev.satyrn.foolsbarrel.FoolsBarrelCommon;
+import dev.satyrn.foolsbarrel.api.extensions.world.entity.player.PlayerExtensions;
 import dev.satyrn.foolsbarrel.data.tags.ModItemTags;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -13,10 +15,10 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -70,15 +72,24 @@ public class BarrelLayer<T extends LivingEntity, M extends EntityModel<T>> exten
 				blockState = Blocks.BARREL.defaultBlockState();
 			}
             if (blockState.hasProperty(BlockStateProperties.OPEN)) {
-                boolean playerSneaking = false;
+                boolean isOpen = true;
                 if (entity instanceof final Player player) {
-                    playerSneaking = player.isCrouching();
+                    isOpen = !player.isCrouching();
+                    if (!isOpen) {
+                        isOpen = ((PlayerExtensions) player).isBarrelOpen();
+                    }
                 }
-                blockState = blockState.setValue(BlockStateProperties.OPEN, !playerSneaking);
+                blockState = blockState.setValue(BlockStateProperties.OPEN, isOpen);
             }
 
             if (blockState.hasProperty(BlockStateProperties.FACING)) {
-                blockState = blockState.setValue(BlockStateProperties.FACING, Direction.UP);
+                Direction facing = Direction.UP;
+                if (entity instanceof final Player player &&
+						player.getPose() == Pose.CROUCHING &&
+						FoolsBarrelCommon.getCommonConfig().getRandomRotateBarrel()) {
+                    facing = ((PlayerExtensions) player).getBarrelFacing();
+                }
+                blockState = blockState.setValue(BlockStateProperties.FACING, facing);
             }
 
             poseStack.pushPose();

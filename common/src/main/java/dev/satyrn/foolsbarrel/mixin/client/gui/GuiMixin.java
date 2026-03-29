@@ -48,7 +48,11 @@ public abstract class GuiMixin {
 
 	@Unique
 	public void foolsBarrelX$renderBarrelOverlay(BarrelOverlayMethod overlayMethod, GuiGraphics guiGraphics) {
-		if (this.minecraft.player == null || overlayMethod == BarrelOverlayMethod.foolsbarrel$overlay$disabled) {
+		final var player = this.minecraft.player;
+		if (player == null || overlayMethod == BarrelOverlayMethod.foolsbarrel$overlay$disabled) {
+			return;
+		}
+		if (!player.getItemBySlot(EquipmentSlot.HEAD).is(ModItemTags.BARRELS) || player.isScoping()) {
 			return;
 		}
 		int screenWidth = guiGraphics.guiWidth();
@@ -57,7 +61,7 @@ public abstract class GuiMixin {
 		float k = ((float) screenWidth - f) / 2.0f;
 		float l = ((float) screenHeight - f) / 2.0f;
 		if (overlayMethod == BarrelOverlayMethod.foolsbarrel$overlay$pin_vertically) {
-			l -= this.minecraft.player.xRotO * 4.0f;
+			l -= player.xRotO * 4.0f;
 		}
 		float m = k + f;
 		float n = l + f;

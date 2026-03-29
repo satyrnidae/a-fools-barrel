@@ -4,7 +4,6 @@ import dev.satyrn.foolsbarrel.FoolsBarrelCommon;
 import dev.satyrn.foolsbarrel.client.FoolsBarrelClient;
 import dev.satyrn.foolsbarrel.config.ClientSideConfig;
 import dev.satyrn.foolsbarrel.neoforge.client.gui.overlay.BarrelOverlay;
-import dev.satyrn.lepidoptera.config.LepidopteraConfig;
 import me.shedaniel.autoconfig.AutoConfig;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
@@ -38,6 +37,6 @@ public final class FoolsBarrelClientEvents {
 
 	@SubscribeEvent
 	static void onRegisterGuiLayers(final RegisterGuiLayersEvent event) {
-		event.registerAbove(VanillaGuiLayers.HOTBAR, ResourceLocation.fromNamespaceAndPath(FoolsBarrelCommon.MOD_ID, "barrel"), new BarrelOverlay());
+		event.registerBelow(VanillaGuiLayers.HOTBAR, ResourceLocation.fromNamespaceAndPath(FoolsBarrelCommon.MOD_ID, "barrel"), new BarrelOverlay());
 	}
 }

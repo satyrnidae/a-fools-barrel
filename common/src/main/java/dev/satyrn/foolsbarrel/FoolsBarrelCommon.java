@@ -34,6 +34,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.annotation.Nullable;
+import java.util.Objects;
 
 @ModMeta(value = "foolsbarrel", name = "A Fool's Barrel", semVer = "21.1.0")
 public final class FoolsBarrelCommon {
@@ -43,9 +44,9 @@ public final class FoolsBarrelCommon {
 
 	private static final Logger LOGGER = LogManager.getLogger();
 
-	public static ServerConfigSync CONFIG_SYNC;
-	public static SyncedConfig<CommonPartition> SYNCED_COMMON;
-	public static SyncedConfig<ClientPartition> SYNCED_CLIENT;
+	public static @Nullable ServerConfigSync CONFIG_SYNC;
+	public static @Nullable SyncedConfig<CommonPartition> SYNCED_COMMON;
+	public static @Nullable SyncedConfig<ClientPartition> SYNCED_CLIENT;
 
 	private FoolsBarrelCommon() {
 	}
@@ -77,6 +78,8 @@ public final class FoolsBarrelCommon {
 					common.setShouldBarrelHideSightline(server.getShouldBarrelHideSightline());
 					common.setShouldHidingRemoveMobAggro(server.getShouldHidingRemoveMobAggro());
 					common.setSnapHidingPlayersToGrid(server.getSnapHidingPlayersToGrid());
+					common.setAllowHidingPlayerInventory(server.getAllowHidingPlayerInventory());
+					common.setRandomRotateBarrel(server.getRandomRotateBarrel());
 					return common;
 				}, new ConfigOverlay<>());
 			builder.clientOverride(server::getShouldOverrideClientConfig, ClientPartitionCodec.INSTANCE, server.getClientOverrides());
@@ -105,12 +108,12 @@ public final class FoolsBarrelCommon {
 
 	@Environment(EnvType.CLIENT)
 	public static ClientConfig<?> getClientConfig() {
-		return SYNCED_CLIENT.get();
+		return Objects.requireNonNull(SYNCED_CLIENT).get();
 	}
 
 	public static CommonConfig<?> getCommonConfig() {
 		if (Platform.getEnvironment() == Env.CLIENT) {
-			return SYNCED_COMMON.get();
+			return Objects.requireNonNull(SYNCED_COMMON).get();
 		}
 		return AutoConfig.getConfigHolder(ServerSideConfig.class).getConfig().getServer();
 	}

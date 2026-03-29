@@ -21,6 +21,7 @@ public class CommonPartition implements CommonConfig<CommonPartition> {
 	@ConfigEntry.Gui.RequiresRestart(false) private boolean shouldAnimalsIgnoreHidingPlayers = true;
 	@ConfigEntry.Gui.RequiresRestart(false) private boolean shouldHidingRemoveMobAggro = true;
 	@ConfigEntry.Gui.RequiresRestart(false) private boolean shouldAllowHidingPlayerInventory = true;
+	@ConfigEntry.Gui.RequiresRestart(false) private boolean randomRotateBarrel = true;
 
 	public CommonPartition() {
 	}
@@ -97,6 +98,18 @@ public class CommonPartition implements CommonConfig<CommonPartition> {
 	}
 
 	@Override
+	@BeanProperty
+	@YamlComment(value = "Whether the barrel should be randomly rotated when equipped.", defaultValue = "true")
+	public boolean getRandomRotateBarrel() {
+		return this.randomRotateBarrel;
+	}
+
+	@SuppressWarnings("unused")
+	public void setRandomRotateBarrel(final boolean value) {
+		this.randomRotateBarrel = value;
+	}
+
+	@Override
 	public void copyFrom(final CommonPartition other) {
 		this.snapHidingPlayersToGrid = other.snapHidingPlayersToGrid;
 		this.shouldBarrelHideSightline = other.shouldBarrelHideSightline;
@@ -104,5 +117,6 @@ public class CommonPartition implements CommonConfig<CommonPartition> {
 		this.shouldAnimalsIgnoreHidingPlayers = other.shouldAnimalsIgnoreHidingPlayers;
 		this.shouldHidingRemoveMobAggro = other.shouldHidingRemoveMobAggro;
 		this.shouldAllowHidingPlayerInventory = other.shouldAllowHidingPlayerInventory;
+		this.randomRotateBarrel = other.randomRotateBarrel;
 	}
 }
