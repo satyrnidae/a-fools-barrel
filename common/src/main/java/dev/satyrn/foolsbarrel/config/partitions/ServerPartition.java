@@ -19,7 +19,7 @@ public class ServerPartition implements ServerConfig<ServerPartition> {
 	@ConfigEntry.Gui.RequiresRestart(false) private boolean shouldHidingRemoveMobAggro = true;
 	@ConfigEntry.Gui.RequiresRestart(false) private boolean shouldOverrideClientConfig = true;
 	@ConfigEntry.Gui.RequiresRestart(false) private boolean shouldAllowHidingPlayerInventory = true;
-	@ConfigEntry.Gui.RequiresRestart(false) private boolean randomRotateBarrel = true;
+	@ConfigEntry.Gui.RequiresRestart(false) private boolean canSetBarrelDirectionOnHide = true;
 	@ConfigEntry.Gui.TransitiveObject
 	@ConfigEntry.Category("clientOverrides")
 	private final ClientPartition clientOverrides = new ClientPartition();
@@ -114,13 +114,13 @@ public class ServerPartition implements ServerConfig<ServerPartition> {
 	@Override
 	@BeanProperty
 	@YamlComment(value = "Whether the barrel should be randomly rotated when equipped.", defaultValue = "true")
-	public boolean getRandomRotateBarrel() {
-		return this.randomRotateBarrel;
+	public boolean getCanSetBarrelDirectionOnHide() {
+		return this.canSetBarrelDirectionOnHide;
 	}
 
 	@SuppressWarnings("unused")
-	public void setRandomRotateBarrel(final boolean value) {
-		this.randomRotateBarrel = value;
+	public void setCanSetBarrelDirectionOnHide(final boolean value) {
+		this.canSetBarrelDirectionOnHide = value;
 	}
 
 	@Override
@@ -144,7 +144,7 @@ public class ServerPartition implements ServerConfig<ServerPartition> {
 		this.shouldHidingRemoveMobAggro = other.shouldHidingRemoveMobAggro;
 		this.shouldOverrideClientConfig = other.shouldOverrideClientConfig;
 		this.shouldAllowHidingPlayerInventory = other.shouldAllowHidingPlayerInventory;
-		this.randomRotateBarrel = other.randomRotateBarrel;
+		this.canSetBarrelDirectionOnHide = other.canSetBarrelDirectionOnHide;
 		this.setClientOverrides(other.getClientOverrides());
 	}
 }

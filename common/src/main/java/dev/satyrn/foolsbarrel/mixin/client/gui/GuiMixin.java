@@ -1,5 +1,6 @@
 package dev.satyrn.foolsbarrel.mixin.client.gui;
 
+import com.llamalad7.mixinextras.sugar.Local;
 import com.mojang.blaze3d.systems.RenderSystem;
 import dev.architectury.injectables.targets.ArchitecturyTarget;
 import dev.satyrn.foolsbarrel.FoolsBarrelCommon;
@@ -14,10 +15,13 @@ import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.Blocks;
 import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 import javax.annotation.Nullable;
 
@@ -33,14 +37,19 @@ public abstract class GuiMixin {
 
 	@Shadow @Final private Minecraft minecraft;
 
-	@Inject(method = "render(Lnet/minecraft/client/gui/GuiGraphics;Lnet/minecraft/client/DeltaTracker;)V", at = @At("HEAD"))
-	void foolsBarrel$render(final GuiGraphics guiGraphics,
-							final DeltaTracker deltaTracker,
-							final @Nullable CallbackInfo ci) {
-		// Not used by NeoForge. See dev.satyrn.foolsbarrel.neoforge.client.gui.overlay.BarrelOverlay
+	@Inject(method = "renderCameraOverlays(Lnet/minecraft/client/gui/GuiGraphics;Lnet/minecraft/client/DeltaTracker;)V",
+			at = @At(value = "INVOKE_ASSIGN",
+					 target = "net/minecraft/world/entity/player/Inventory.getArmor (I)Lnet/minecraft/world/item/ItemStack;"))
+	void foolsBarrel$renderCameraOverlays(final GuiGraphics guiGraphics,
+	                        final DeltaTracker deltaTracker,
+	                        final @Nullable CallbackInfo ci,
+	                        @SuppressWarnings("LocalMayUseName")
+								@Local(index = 4) ItemStack itemStack) {
+		// Neoforge is supposed to use render layers, so it doesn't use this injection.
+		// See dev.satyrn.foolsbarrel.neoforge.client.gui.overlay.BarrelOverlay
 		if (!"neoforge".equalsIgnoreCase(ArchitecturyTarget.getCurrentTarget())) {
-			final @Nullable var player = this.minecraft.player;
-			if (player != null && player.getItemBySlot(EquipmentSlot.HEAD).is(ModItemTags.BARRELS)) {
+			// Only render if the itemstack isn't a pumpkin (pumpkin overlay supersedes)
+			if (itemStack.is(ModItemTags.BARRELS) && !itemStack.is(Blocks.CARVED_PUMPKIN.asItem())) {
 				this.foolsBarrelX$renderBarrelOverlay(FoolsBarrelCommon.getClientConfig().getOverlayMethod(), guiGraphics);
 			}
 		}
@@ -52,9 +61,7 @@ public abstract class GuiMixin {
 		if (player == null || overlayMethod == BarrelOverlayMethod.foolsbarrel$overlay$disabled) {
 			return;
 		}
-		if (!player.getItemBySlot(EquipmentSlot.HEAD).is(ModItemTags.BARRELS) || player.isScoping()) {
-			return;
-		}
+
 		int screenWidth = guiGraphics.guiWidth();
 		int screenHeight = guiGraphics.guiHeight();
 		float f = (float) Math.min(screenWidth, screenHeight);

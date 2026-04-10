@@ -35,6 +35,7 @@
   },
   "mixins": [
     "foolsbarrel.common.mixins.json",
+    "foolsbarrel.accessories.mixins.json",
     "foolsbarrel.fabric.mixins.json"
   ],
   "depends": {
@@ -43,7 +44,7 @@
     "java": ">=21",
     "architectury": ">=13.0.6",
     "fabric-api": "*",
-    "lepidoptera-api": ">=1.0.0+1.21.1",
+    "lepidoptera-api": ">=1.1.0+1.21.1",
     "cloth-config": ">=15.0.140"
   },
   "suggests": {

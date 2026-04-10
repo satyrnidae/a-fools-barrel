@@ -43,6 +43,7 @@ public abstract class HumanoidMobRendererMixin extends MobRenderer {
 		this.addLayer(new BarrelLayer(this));
 
 		// Find the extant head feature renderer and set the biped flag to true
+		//noinspection UnstableApiUsage - Mixin use
 		Optional<RenderLayer<?, ?>> headFeatureRenderer = ((LivingEntityRendererAccessor) this).getLayers()
 			.stream()
 			.filter(item -> item instanceof CustomHeadLayer)

@@ -53,6 +53,15 @@ subprojects {
 			name = "Satyrn Maven"
 			url = "https://maven.satyrn.dev"
 		}
+		maven {
+			name = "WispForest"
+			url = "https://maven.wispforest.io/releases/"
+		}
+		maven {
+			name = "Sinytra"
+			url = "https://maven.su5ed.dev/releases"
+		}
+		mavenLocal()
     }
 
     loom {

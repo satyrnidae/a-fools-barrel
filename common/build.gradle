@@ -35,4 +35,7 @@ dependencies {
 		exclude(group: "net.fabricmc")
 		exclude(group: "dev.architectury")
 	}
+
+	// Optional Accessories integration — compile-only, not remapped (already Mojang-mapped)
+	compileOnly("io.wispforest:accessories-common:${rootProject.accessories_version}-mojmap") { transitive = false }
 }

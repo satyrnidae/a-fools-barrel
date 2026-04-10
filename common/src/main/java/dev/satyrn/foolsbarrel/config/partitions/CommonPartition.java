@@ -15,13 +15,27 @@ import java.beans.JavaBean;
 	These settings apply to both client and server sides
 	Version 119.2.3""")
 public class CommonPartition implements CommonConfig<CommonPartition> {
-	@ConfigEntry.Gui.RequiresRestart(false) private boolean snapHidingPlayersToGrid = true;
-	@ConfigEntry.Gui.RequiresRestart(false) private boolean allowJumping = true;
-	@ConfigEntry.Gui.RequiresRestart(false) private boolean shouldBarrelHideSightline = true;
-	@ConfigEntry.Gui.RequiresRestart(false) private boolean shouldAnimalsIgnoreHidingPlayers = true;
-	@ConfigEntry.Gui.RequiresRestart(false) private boolean shouldHidingRemoveMobAggro = true;
-	@ConfigEntry.Gui.RequiresRestart(false) private boolean shouldAllowHidingPlayerInventory = true;
-	@ConfigEntry.Gui.RequiresRestart(false) private boolean randomRotateBarrel = true;
+	@ConfigEntry.Gui.RequiresRestart(false)
+	@ConfigEntry.Gui.Tooltip
+	private boolean snapHidingPlayersToGrid = true;
+	@ConfigEntry.Gui.RequiresRestart(false)
+	@ConfigEntry.Gui.Tooltip
+	private boolean allowJumping = true;
+	@ConfigEntry.Gui.RequiresRestart(false)
+	@ConfigEntry.Gui.Tooltip
+	private boolean shouldBarrelHideSightline = true;
+	@ConfigEntry.Gui.RequiresRestart(false)
+	@ConfigEntry.Gui.Tooltip
+	private boolean shouldAnimalsIgnoreHidingPlayers = true;
+	@ConfigEntry.Gui.RequiresRestart(false)
+	@ConfigEntry.Gui.Tooltip
+	private boolean shouldHidingRemoveMobAggro = true;
+	@ConfigEntry.Gui.RequiresRestart(false)
+	@ConfigEntry.Gui.Tooltip
+	private boolean shouldAllowHidingPlayerInventory = true;
+	@ConfigEntry.Gui.RequiresRestart(false)
+	@ConfigEntry.Gui.Tooltip
+	private boolean canSetBarrelDirectionOnHide = true;
 
 	public CommonPartition() {
 	}
@@ -100,13 +114,13 @@ public class CommonPartition implements CommonConfig<CommonPartition> {
 	@Override
 	@BeanProperty
 	@YamlComment(value = "Whether the barrel should be randomly rotated when equipped.", defaultValue = "true")
-	public boolean getRandomRotateBarrel() {
-		return this.randomRotateBarrel;
+	public boolean getCanSetBarrelDirectionOnHide() {
+		return this.canSetBarrelDirectionOnHide;
 	}
 
 	@SuppressWarnings("unused")
-	public void setRandomRotateBarrel(final boolean value) {
-		this.randomRotateBarrel = value;
+	public void setCanSetBarrelDirectionOnHide(final boolean value) {
+		this.canSetBarrelDirectionOnHide = value;
 	}
 
 	@Override
@@ -117,6 +131,6 @@ public class CommonPartition implements CommonConfig<CommonPartition> {
 		this.shouldAnimalsIgnoreHidingPlayers = other.shouldAnimalsIgnoreHidingPlayers;
 		this.shouldHidingRemoveMobAggro = other.shouldHidingRemoveMobAggro;
 		this.shouldAllowHidingPlayerInventory = other.shouldAllowHidingPlayerInventory;
-		this.randomRotateBarrel = other.randomRotateBarrel;
+		this.canSetBarrelDirectionOnHide = other.canSetBarrelDirectionOnHide;
 	}
 }

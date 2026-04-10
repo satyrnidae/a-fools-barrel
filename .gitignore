@@ -35,3 +35,4 @@ workspace/
 
 # Local-only files
 *.local.*
+*.log

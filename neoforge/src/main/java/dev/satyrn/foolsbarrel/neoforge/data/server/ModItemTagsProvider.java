@@ -26,5 +26,6 @@ public class ModItemTagsProvider extends ModOnlyItemTagsProvider {
 
 		this.tag(ApiItemTags.HEAD_EQUIPMENT)
 			.addTag(ModItemTags.BARRELS);
+
 	}
 }

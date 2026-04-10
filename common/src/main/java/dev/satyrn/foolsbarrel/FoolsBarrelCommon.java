@@ -6,19 +6,23 @@ import dev.satyrn.foolsbarrel.api.config.ClientConfig;
 import dev.satyrn.foolsbarrel.api.config.CommonConfig;
 import dev.satyrn.foolsbarrel.api.config.ServerConfig;
 import dev.satyrn.foolsbarrel.config.ClientSideConfig;
+import dev.satyrn.lepidoptera.api.config.PartitionConfigHolder;
 import dev.satyrn.foolsbarrel.config.ServerSideConfig;
 import dev.satyrn.foolsbarrel.config.codecs.ClientPartitionCodec;
 import dev.satyrn.foolsbarrel.config.codecs.CommonPartitionCodec;
 import dev.satyrn.foolsbarrel.config.partitions.ClientPartition;
 import dev.satyrn.foolsbarrel.config.partitions.CommonPartition;
+import dev.satyrn.foolsbarrel.config.partitions.ServerPartition;
 import dev.satyrn.foolsbarrel.sounds.FoolsBarrelSoundEvents;
 import dev.satyrn.lepidoptera.api.ModMeta;
-import dev.satyrn.lepidoptera.api.config.sync.ConfigOverlay;
-import dev.satyrn.lepidoptera.api.config.sync.ServerConfigSync;
+import dev.satyrn.lepidoptera.api.compatibility.Compatibility;
+import dev.satyrn.lepidoptera.api.compatibility.CompatibilityProviders;
+import dev.satyrn.lepidoptera.api.config.PartitionConfigHolder;
 import dev.satyrn.lepidoptera.api.config.sync.SyncedConfig;
 import dev.satyrn.lepidoptera.api.lang.T9n;
 import dev.satyrn.lepidoptera.api.config.serializers.CommentedYamlConfigSerializer;
 import me.shedaniel.autoconfig.AutoConfig;
+import me.shedaniel.autoconfig.ConfigHolder;
 import me.shedaniel.autoconfig.serializer.PartitioningSerializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -33,10 +37,15 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import net.minecraft.server.MinecraftServer;
+
 import javax.annotation.Nullable;
 import java.util.Objects;
 
 @ModMeta(value = "foolsbarrel", name = "A Fool's Barrel", semVer = "21.1.0")
+@CompatibilityProviders({
+	"dev.satyrn.foolsbarrel.compat.accessories.AccessoriesCompatProvider"
+})
 public final class FoolsBarrelCommon {
     public static final String MOD_ID = "foolsbarrel";
 	public static final int NETWORK_VERSION = 1;
@@ -44,7 +53,6 @@ public final class FoolsBarrelCommon {
 
 	private static final Logger LOGGER = LogManager.getLogger();
 
-	public static @Nullable ServerConfigSync CONFIG_SYNC;
 	public static @Nullable SyncedConfig<CommonPartition> SYNCED_COMMON;
 	public static @Nullable SyncedConfig<ClientPartition> SYNCED_CLIENT;
 
@@ -55,37 +63,62 @@ public final class FoolsBarrelCommon {
 		log(Level.INFO, "INIT: Registering sound events for A Fool's Barrel");
 		FoolsBarrelSoundEvents.register();
 
+		Compatibility.registerAll(FoolsBarrelCommon.class);
+
 		if (Platform.getEnvironment() == Env.CLIENT) {
 			AutoConfig.register(ClientSideConfig.class, PartitioningSerializer.wrap(CommentedYamlConfigSerializer::new));
 
-			final var localCommon = AutoConfig.getConfigHolder(ClientSideConfig.class).getConfig().getCommon();
-			final var localClient = AutoConfig.getConfigHolder(ClientSideConfig.class).getConfig().getClient();
-			final var builder = ServerConfigSync.builder(MOD_ID)
-					.networkVersion(NETWORK_VERSION, I18N_VERSION_MISMATCH);
-			SYNCED_COMMON = builder.commonConfig(CommonPartitionCodec.INSTANCE, localCommon);
-			SYNCED_CLIENT = builder.clientOverride(() -> false, ClientPartitionCodec.INSTANCE, localClient);
-			CONFIG_SYNC = builder.register();
+			final ConfigHolder<ClientSideConfig> clientHolder =
+					AutoConfig.getConfigHolder(ClientSideConfig.class);
+			SYNCED_COMMON = SyncedConfig.builder(MOD_ID, CommonPartitionCodec.INSTANCE,
+							new PartitionConfigHolder<>(clientHolder, ClientSideConfig::getCommon, CommonPartition.class))
+					.networkVersion(NETWORK_VERSION, I18N_VERSION_MISMATCH)
+					.register();
+			SYNCED_CLIENT = SyncedConfig.builder(MOD_ID + "_client", ClientPartitionCodec.INSTANCE,
+							new PartitionConfigHolder<>(clientHolder, ClientSideConfig::getClient, ClientPartition.class))
+					.networkVersion(NETWORK_VERSION, I18N_VERSION_MISMATCH)
+					.register();
 		} else {
 			AutoConfig.register(ServerSideConfig.class, PartitioningSerializer.wrap(CommentedYamlConfigSerializer::new));
 
-			final var server = AutoConfig.getConfigHolder(ServerSideConfig.class).getConfig().getServer();
-			final var builder = ServerConfigSync.builder(MOD_ID)
-					.networkVersion(NETWORK_VERSION, I18N_VERSION_MISMATCH);
-			builder.commonConfig(CommonPartitionCodec.INSTANCE, () -> {
-					final CommonPartition common = new CommonPartition();
-					common.setAllowJumping(server.getAllowJumping());
-					common.setShouldAnimalsIgnoreHidingPlayers(server.getShouldAnimalsIgnoreHidingPlayers());
-					common.setShouldBarrelHideSightline(server.getShouldBarrelHideSightline());
-					common.setShouldHidingRemoveMobAggro(server.getShouldHidingRemoveMobAggro());
-					common.setSnapHidingPlayersToGrid(server.getSnapHidingPlayersToGrid());
-					common.setAllowHidingPlayerInventory(server.getAllowHidingPlayerInventory());
-					common.setRandomRotateBarrel(server.getRandomRotateBarrel());
-					return common;
-				}, new ConfigOverlay<>());
-			builder.clientOverride(server::getShouldOverrideClientConfig, ClientPartitionCodec.INSTANCE, server.getClientOverrides());
-			CONFIG_SYNC = builder.register();
+			final ConfigHolder<ServerSideConfig> serverHolder =
+					AutoConfig.getConfigHolder(ServerSideConfig.class);
+			SYNCED_COMMON = SyncedConfig.builder(MOD_ID, CommonPartitionCodec.INSTANCE,
+							new PartitionConfigHolder<>(serverHolder, c -> {
+								final ServerPartition sp = c.getServer();
+								final CommonPartition common = new CommonPartition();
+								common.setAllowJumping(sp.getAllowJumping());
+								common.setShouldAnimalsIgnoreHidingPlayers(sp.getShouldAnimalsIgnoreHidingPlayers());
+								common.setShouldBarrelHideSightline(sp.getShouldBarrelHideSightline());
+								common.setShouldHidingRemoveMobAggro(sp.getShouldHidingRemoveMobAggro());
+								common.setSnapHidingPlayersToGrid(sp.getSnapHidingPlayersToGrid());
+								common.setAllowHidingPlayerInventory(sp.getAllowHidingPlayerInventory());
+								common.setCanSetBarrelDirectionOnHide(sp.getCanSetBarrelDirectionOnHide());
+								return common;
+							}, CommonPartition.class))
+					.networkVersion(NETWORK_VERSION, I18N_VERSION_MISMATCH)
+					.register();
+			SYNCED_CLIENT = SyncedConfig.builder(MOD_ID + "_client", ClientPartitionCodec.INSTANCE,
+							new PartitionConfigHolder<>(serverHolder, c -> {
+								final ServerPartition sp = c.getServer();
+								return sp.getShouldOverrideClientConfig()
+										? sp.getClientOverrides()
+										: new ClientPartition();
+							}, ClientPartition.class))
+					.networkVersion(NETWORK_VERSION, I18N_VERSION_MISMATCH)
+					.register();
 		}
     }
+
+	public static void serverStarted(final MinecraftServer server) {
+		if (SYNCED_COMMON != null) SYNCED_COMMON.serverStarted(server);
+		if (SYNCED_CLIENT != null) SYNCED_CLIENT.serverStarted(server);
+	}
+
+	public static void serverStopped() {
+		if (SYNCED_COMMON != null) SYNCED_COMMON.serverStopped();
+		if (SYNCED_CLIENT != null) SYNCED_CLIENT.serverStopped();
+	}
 
 	public static void postInit() {
 		log(Level.INFO, "POST_INIT: Registering dispenser behavior for A Fool's Barrel");

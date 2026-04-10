@@ -50,7 +50,7 @@
       },
 			{
 				"id": "lepidoptera-api",
-				"version": ">=1.0.0+1.21.1"
+				"version": ">=1.1.0+1.21.1"
 			},
 			{
 				"id": "cloth-config",
@@ -65,6 +65,7 @@
   },
   "mixin": [
     "foolsbarrel.common.mixins.json",
+    "foolsbarrel.accessories.mixins.json",
 		"foolsbarrel.quilt.mixins.json"
   ],
 	"modmenu": {

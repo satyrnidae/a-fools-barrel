@@ -14,7 +14,6 @@ public final class FoolsBarrelClient {
 
 	public static void initClient() {
 		FoolsBarrelCommon.log(Level.INFO, "CLIENT_INIT: Loading A Fool's Barrel client-side");
-		FoolsBarrelCommon.CONFIG_SYNC.registerClientHandlers();
 	}
 
 }

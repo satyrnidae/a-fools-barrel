@@ -75,6 +75,7 @@ processResources {
 
     from(project(':common').tasks.processResources) {
         include 'foolsbarrel.common.mixins.json'
+        include 'foolsbarrel.accessories.mixins.json'
         include 'icon.png'
     }
 
@@ -84,7 +85,7 @@ processResources {
 
     doLast {
         def refmapName = "${rootProject.name}.${project(':common').name}.refmap.json"
-        ['foolsbarrel.common.mixins.json'].each { filename ->
+        ['foolsbarrel.common.mixins.json', 'foolsbarrel.accessories.mixins.json'].each { filename ->
             def f = new File(destinationDir, filename)
             if (f.exists()) {
                 def json = new JsonSlurper().parseText(f.text)

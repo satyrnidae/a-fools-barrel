@@ -24,7 +24,7 @@ public final class CommonPartitionCodec implements ConfigCodec<CommonPartition> 
 		p.setShouldHidingRemoveMobAggro(buf.readBoolean());
 		p.setAllowJumping(buf.readBoolean());
 		p.setAllowHidingPlayerInventory(buf.readBoolean());
-		p.setRandomRotateBarrel(buf.readBoolean());
+		p.setCanSetBarrelDirectionOnHide(buf.readBoolean());
 		return p;
 	}
 }

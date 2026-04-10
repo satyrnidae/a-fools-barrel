@@ -86,7 +86,7 @@ public class BarrelLayer<T extends LivingEntity, M extends EntityModel<T>> exten
                 Direction facing = Direction.UP;
                 if (entity instanceof final Player player &&
 						player.getPose() == Pose.CROUCHING &&
-						FoolsBarrelCommon.getCommonConfig().getRandomRotateBarrel()) {
+						FoolsBarrelCommon.getCommonConfig().getCanSetBarrelDirectionOnHide()) {
                     facing = ((PlayerExtensions) player).getBarrelFacing();
                 }
                 blockState = blockState.setValue(BlockStateProperties.FACING, facing);

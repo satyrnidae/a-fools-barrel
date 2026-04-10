@@ -20,6 +20,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.entity.EntityDimensions;
+import net.minecraft.world.phys.Vec3;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -55,13 +56,22 @@ public abstract class PlayerMixin extends LivingEntity {
 		if (this.foolsBarrel$previousPose != pose && this.getItemBySlot(EquipmentSlot.HEAD).is(ModItemTags.BARRELS)) {
 			if (this.foolsBarrel$previousPose == Pose.CROUCHING) {
 				this.level().playSound(null, this, SoundEvents.BARREL_OPEN, SoundSource.BLOCKS, 1, 1);
+				// Reset barrel direction to UP
 				if (!this.level().isClientSide()) {
 					((PlayerExtensions) this).setBarrelFacing(Direction.UP);
 				}
 			} else if (pose == Pose.CROUCHING) {
 				this.level().playSound(null, this, SoundEvents.BARREL_CLOSE, SoundSource.BLOCKS, 1, 1);
-				if (!this.level().isClientSide() && FoolsBarrelCommon.getCommonConfig().getRandomRotateBarrel()) {
-					((PlayerExtensions) this).setBarrelFacing(Direction.getRandom(this.getRandom()));
+				if (!this.level().isClientSide() && FoolsBarrelCommon.getCommonConfig().getCanSetBarrelDirectionOnHide()) {
+					final Vec3 lookVec = this.getLookAngle();
+					// Reverse the vector X and Y so it places with the door facing our look vec on those axes
+					// Divide Y by 1.5f to constrain up/down to extreme values
+					final Vec3 placeVec = new Vec3(-lookVec.x, -(lookVec.y / 1.5f), lookVec.z);
+
+					final Direction direction = Direction.getNearest(placeVec);
+
+					// Set barrel direction from look angle.
+					((PlayerExtensions) this).setBarrelFacing(direction);
 				}
 			}
 		}

@@ -1,5 +1,6 @@
 package dev.satyrn.foolsbarrel.neoforge;
 
+import dev.architectury.event.events.common.LifecycleEvent;
 import dev.satyrn.foolsbarrel.FoolsBarrelCommon;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
@@ -10,5 +11,8 @@ public final class FoolsBarrelNeoForge {
 		// Architectury 13.x handles mod event bus registration automatically.
 		// Run our common setup.
 		FoolsBarrelCommon.init();
+
+		LifecycleEvent.SERVER_STARTED.register(FoolsBarrelCommon::serverStarted);
+		LifecycleEvent.SERVER_STOPPED.register(server -> FoolsBarrelCommon.serverStopped());
 	}
 }

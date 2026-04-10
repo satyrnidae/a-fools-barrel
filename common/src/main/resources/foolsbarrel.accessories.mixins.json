@@ -1,0 +1,12 @@
+{
+  "required": false,
+  "minVersion": "0.8",
+  "package": "dev.satyrn.foolsbarrel.mixin.accessories",
+  "compatibilityLevel": "JAVA_21",
+  "client": [
+    "AccessoriesRenderLayerMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

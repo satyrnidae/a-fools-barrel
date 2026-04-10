@@ -20,11 +20,15 @@ import java.util.Optional;
 	These settings only apply to the client, and are ignored entirely by the server.
 	Version 119.2.3""")
 public class ClientPartition implements ClientConfig<ClientPartition> {
-	@ConfigEntry.Gui.RequiresRestart(false) private boolean adjustCameraInBarrel = true;
 	@ConfigEntry.Gui.RequiresRestart(false)
+	@ConfigEntry.Gui.Tooltip
+	private boolean adjustCameraInBarrel = true;
+	@ConfigEntry.Gui.RequiresRestart(false)
+	@ConfigEntry.Gui.Tooltip
 	@ConfigEntry.Gui.EnumHandler(option = ConfigEntry.Gui.EnumHandler.EnumDisplayOption.BUTTON)
 	private BarrelOverlayMethod overlayMethod = BarrelOverlayMethod.foolsbarrel$overlay$pin_vertically;
 	@ConfigEntry.Gui.RequiresRestart(false)
+	@ConfigEntry.Gui.Tooltip
 	@ConfigEntry.Gui.EnumHandler(option = ConfigEntry.Gui.EnumHandler.EnumDisplayOption.BUTTON)
 	private NametagOptions hideNametag = NametagOptions.foolsbarrel$nametag$when_crouched;
 

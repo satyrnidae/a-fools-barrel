@@ -44,12 +44,15 @@ side = "BOTH"
 [[dependencies.foolsbarrel]]
 modId = "lepidoptera_api"
 mandatory = true
-versionRange = "[1.0.0,)"
+versionRange = "[1.1.0,)"
 ordering = "AFTER"
 side = "BOTH"
 
 [[mixins]]
 config = "foolsbarrel.common.mixins.json"
+
+[[mixins]]
+config = "foolsbarrel.accessories.mixins.json"
 
 [[mixins]]
 config = "foolsbarrel.neoforge.mixins.json"
